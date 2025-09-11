@@ -1,21 +1,21 @@
-import { createBrowserRouter } from "react-router-dom";
-import Home from "../pages/Home";
-import NotFound from "../pages/NotFound";
-import CodeEditor from "../pages/CodeEditor";
+import { createBrowserRouter } from 'react-router-dom';
+import Home from '../pages/Home';
+import NotFound from '../pages/NotFound';
+import Edit from '../pages/Edit';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Home />,
     children: [],
   },
   {
-    path: "code-editor",
-    element: <CodeEditor />,
+    path: 'code-editor',
+    element: <Edit />,
   },
 
   {
-    path: "*",
+    path: '*',
     element: <NotFound />,
   },
 ]);
