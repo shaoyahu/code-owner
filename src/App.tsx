@@ -1,27 +1,15 @@
-import { Button, notification } from "antd";
-import { SmileOutlined } from "@ant-design/icons";
+import router from "./router/index.tsx";
+import { notification } from "antd";
+import { ApiContext } from "./context";
+import { RouterProvider } from "react-router-dom";
+
 function App() {
-  const openNotification = () => {
-    notification.open({
-      message: "Notification Title",
-      description:
-        "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
-      onClick: () => {
-        console.log("Notification Clicked!");
-      },
-    });
-  };
+  const [api, contextHolder] = notification.useNotification();
   return (
-    <div>
-      <Button
-        className="!m-5"
-        type="primary"
-        onClick={openNotification}
-        icon={<SmileOutlined />}
-      >
-        Button
-      </Button>
-    </div>
+    <ApiContext.Provider value={api}>
+      {contextHolder}
+      <RouterProvider router={router} />
+    </ApiContext.Provider>
   );
 }
 

@@ -1,6 +1,5 @@
 一个新开的项目。
 
-
 提交变更信息看提交日志。
 
-```
+react + vite + tailwind + antd + react-router + zustand
