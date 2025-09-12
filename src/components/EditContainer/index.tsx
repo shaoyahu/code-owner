@@ -4,14 +4,14 @@ import useGetPageInfo from '../../hooks/useGetPageInfo';
 export default function EditContainer() {
   const { height, width } = WEB_PAGE_CONFIG;
   const page = useGetPageInfo();
-  console.log(page);
+  console.log('page', page);
   return (
     <div
       className="flex items-center justify-center shadow-[0_0_10px_5px_rgba(0,0,0,0.1)]"
       style={{ height, width }}
     >
       {/* 下方这个 div 为真正 tsx 页面返回元素 */}
-      <div className="h-full w-full bg-white">{page.height}</div>
+      <div className="h-full w-full bg-white">{page.name}</div>
     </div>
   );
 }
