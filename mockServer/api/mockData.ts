@@ -1,58 +1,60 @@
 export const page = {
-  "name": "MyButton.tsx",
-  "page": {
-    "height": "800px",
-    "width": "1100px"
+  name: "MyButton.tsx",
+  page: {
+    height: "800px",
+    width: "1100px",
   },
-  "imports": [
-    "import { useNavigate } from 'react-router-dom'"
-  ],
-  "nodes": [
+  imports: ["import { useNavigate } from 'react-router-dom'"],
+  nodes: [
     {
-      "type": "div",
-      "_desc": "最基础的组件，用来填充空间或包裹组件",
-      "css": {
+      type: "div",
+      name: "顶部 header",
+      _desc: "最基础的组件，用来填充空间或包裹组件",
+      css: {},
+      tailwind: "w-[300px] h-[300px] bg-cyan-200",
+      event: {
+        onClick: {
+          name: "onClick",
+          handleCode: "console.log('click')",
+        },
       },
-      "tailwind": "w-[300px] h-[300px] bg-cyan-200",
-      "event": {
-        "onClick": {
-          "name": "onClick",
-          "handleCode": "console.log('click')"
-        }
-      },
-      "children": [
+      childNode: [
         {
-          "type": "text",
-          "_desc": "最基础的组件，用于放置文字，因为组件内是可以直接放文字的",
-          "value": "直接的文字"
+          type: "span",
+          name: "页面名称",
+          _desc: "最基础的组件，用于放置文字，因为组件内是可以直接放文字的",
+          text: "直接的文字",
         },
         {
-          "type": "antd-text",
-          "css": {},
-          "tailwind": "text-[20px] font-bold",
-          "event": {},
-          "children": [
+          type: "ad-button",
+          name: "登录按钮",
+          css: {},
+          tailwind: "text-[20px] font-bold",
+          event: {},
+          childNode: [
             {
-              "type": "text",
-              "value": "组件内的文字"
-            }
-          ]
-        }
-      ]
-    }
+              type: "span",
+              name: "登录按钮文本",
+              text: "组件内的文字",
+            },
+          ],
+        },
+      ],
+    },
   ],
-  "effects": [
+  effects: [
     {
-      "runCode": "",
-      "dependence": []
-    }
+      runCode: "",
+      dependence: [],
+    },
   ],
-  "states": [
+  states: [
     {
-      "name": "count",
-      "_desc": "name 是由用户决定的，用户一旦决定了 name 那么 setState 函数名就会是固定的",
-      "value": 0
-    }
+      name: "count",
+      _desc:
+        "name 是由用户决定的，用户一旦决定了 name 那么 setState 函数名就会是固定的",
+      value: 0,
+    },
   ],
-  "otherCode": "const navigate = useNavigate()"
+  otherCode: "const navigate = useNavigate()",
 };

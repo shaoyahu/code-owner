@@ -1,13 +1,12 @@
-import type { ReactNode } from "react";
 import type { BasicComponentPropsType } from "../../../../types";
 
-export type DivPropsType = BasicComponentPropsType & {
+export type DivPropsType = React.PropsWithChildren<
+  BasicComponentPropsType & {}
+>;
 
-
-
-  children: ReactNode;
-};
-
-export const DivDefaultProps = {
-  children: null,
+export const DivDefaultProps: DivPropsType = {
+  id: "-1",
+  type: "div",
+  tailwind: "w-auto h-[100px]",
+  childNode: undefined,
 };

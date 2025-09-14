@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec npx ts-node ./index.ts --host",
-    "start": "nodemon --exec npx ts-node ./index.ts --host"
+    "dev": "nodemon --exec tsx ./index.ts",
+    "start": "nodemon --exec tsx ./index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +17,7 @@
     "os": "^0.1.2"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "tsx": "^4.20.5"
   }
 }

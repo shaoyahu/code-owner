@@ -1,12 +1,13 @@
+
 // 基础组件属性，所有组件在此基础上扩充自己的属性类型
 export type BasicComponentPropsType = {
+  id: string;
   type: string;
   _desc?: string;
-  id: string;
-  css: Record<string, string>;
-  tailwind: string;
+  css?: Record<string, string>;
+  tailwind?: string;
   event?: Record<string, Record<string, string>>;
-  children?: BasicComponentPropsType[];
+  childNode?: BasicComponentPropsType[];
 };
 
 export type StateType = {
@@ -20,6 +21,7 @@ export type EffectType = {
   dependence: string[];
 };
 
+// 页面组件类型
 export type PageType = {
   name: string;
   id: string;
