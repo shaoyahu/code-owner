@@ -1,7 +1,7 @@
-
 // 基础组件属性，所有组件在此基础上扩充自己的属性类型
 export type BasicComponentPropsType = {
   id: string;
+  name: string;
   type: string;
   _desc?: string;
   css?: Record<string, string>;
@@ -27,8 +27,7 @@ export type PageType = {
   id: string;
   page: Record<string, string>;
   imports?: string[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  nodes?: BasicComponentPropsType[] | any;
+  nodes?: BasicComponentPropsType[];
   states?: StateType[];
   effects?: EffectType[];
   otherCode?: string;

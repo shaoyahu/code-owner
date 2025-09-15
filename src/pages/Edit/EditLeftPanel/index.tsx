@@ -2,15 +2,15 @@ import {
   ApiOutlined,
   DeploymentUnitOutlined,
   UnorderedListOutlined,
-} from "@ant-design/icons";
-import { Tabs } from "antd";
-import ComponentLib from "./ComponentLib";
-import Structure from "./Structure";
+} from '@ant-design/icons';
+import { Tabs } from 'antd';
+import ComponentLib from './ComponentLib';
+import Structure from './Structure';
 
 export default function EditLeftPanel() {
   const tabsItems = [
     {
-      key: "pages",
+      key: 'pages',
       label: (
         <div>
           <UnorderedListOutlined />
@@ -20,7 +20,7 @@ export default function EditLeftPanel() {
       children: <div>页面</div>,
     },
     {
-      key: "structure",
+      key: 'structure',
       label: (
         <div>
           <DeploymentUnitOutlined />
@@ -30,7 +30,7 @@ export default function EditLeftPanel() {
       children: <Structure />,
     },
     {
-      key: "componentLib",
+      key: 'componentLib',
       label: (
         <div>
           <ApiOutlined />
@@ -40,5 +40,5 @@ export default function EditLeftPanel() {
       children: <ComponentLib />,
     },
   ];
-  return <Tabs defaultActiveKey="componentLib" items={tabsItems} />;
+  return <Tabs defaultActiveKey="structure" items={tabsItems} />;
 }
