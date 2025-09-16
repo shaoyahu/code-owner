@@ -1,13 +1,12 @@
-import { getComponentConfigByType } from '../../../components/componentLib';
-import { WEB_PAGE_CONFIG } from '../../../constant/defaultConfig';
-import useGetPageInfo from '../../../hooks/useGetPageInfo';
-import type { BasicComponentPropsType } from '../../../types';
+import { getComponentConfigByType } from "../../../components/componentLib";
+import { WEB_PAGE_CONFIG } from "../../../constant/defaultConfig";
+import useGetPageInfo from "../../../hooks/useGetPageInfo";
+import type { BasicComponentPropsType } from "../../../types";
 
 export default function EditContainer() {
   const { height, width } = WEB_PAGE_CONFIG;
   const page = useGetPageInfo();
   const { nodes } = page;
-  console.log('page', page);
   return (
     <div
       className="flex justify-center items-center shadow-[0_0_10px_5px_rgba(0,0,0,0.1)]"
@@ -17,8 +16,8 @@ export default function EditContainer() {
       <div className="bg-white w-full h-full">
         {nodes?.map((item) => {
           return (
-            <div key={item.id} className="">
-              <div className="pointer-events-none">{genComponent(item)}</div>
+            <div key={item.id} className="!m-1">
+              {genComponent(item)}
             </div>
           );
         })}
@@ -32,14 +31,17 @@ function genComponent(item: BasicComponentPropsType) {
   if (!componentConfig) {
     return null;
   }
-  console.log('item', item);
   const { Component } = componentConfig;
-  const { tailwind = '', css = {}, childNode = [], ...rest } = item;
+  const { childNode = [], ...rest } = item;
+
+  if (item.id == "2") {
+    console.log("item", item, Component);
+  }
 
   if (childNode && childNode.length > 0) {
     return (
       <>
-        <Component className={tailwind} css={css} {...rest}>
+        <Component {...rest}>
           {childNode?.map((child) => genComponent(child))}
         </Component>
       </>

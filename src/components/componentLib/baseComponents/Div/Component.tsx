@@ -1,9 +1,9 @@
-import { type DivPropsType, DivDefaultProps } from './interface';
+import { type DivPropsType, DivDefaultProps } from "./interface";
 
 export default function DivComponent(props: DivPropsType) {
-  const { children, className, css } = { ...DivDefaultProps, ...props };
+  const { children, tailwind, css } = { ...DivDefaultProps, ...props };
   return (
-    <div className={className} style={css}>
+    <div className={tailwind} style={css}>
       {children}
     </div>
   );
