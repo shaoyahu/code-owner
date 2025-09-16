@@ -2,51 +2,36 @@ import { useEffect, useState } from 'react';
 import useGetPageInfo from '../../../hooks/useGetPageInfo';
 import { Space, Tag, Tree, type TreeDataNode, type TreeProps } from 'antd';
 import type { BasicComponentPropsType } from '../../../types';
-import { calcNewStruct } from '../../../utils/calc';
+import useStore from '../../../store';
 
 export default function Structure() {
   const { nodes } = useGetPageInfo();
   const [struct, setStruct] = useState<TreeDataNode[]>([]);
+  const { moveNode } = useStore();
 
   const onSelect: TreeProps['onSelect'] = (selectedKeys, info) => {
     console.log('selected', selectedKeys, info);
   };
+
   const onDrop: TreeProps['onDrop'] = (info) => {
-    console.log('info', info);
-    const dragKey = info.dragNode.key as string;
-    const dropKey = info.node.key as string;
+    const dragId = info.dragNode.key.toString();
+    const dropId = info.node.key.toString();
     const { dropPosition, dropToGap } = info;
 
     if (dropToGap) {
       // 插在缝隙（同级）
       if (dropPosition >= 1) {
         // 插在目标节点之后，只需要关注 node 对象，一定在这个对象的下面一个
-        const result = calcNewStruct(struct, dragKey, dropKey);
+        moveNode(dragId, dropId, 'after');
       }
+      if (dropPosition < 0) {
+        // 插在目标节点之前，只需要关注 node 对象，一定在这个对象的上面一个
+        moveNode(dragId, dropId, 'before');
+      }
+    } else {
+      // 插在目标节点内部，只需要关注 node 对象，一定在这个对象的 children 数组中第一个的位置
+      moveNode(dragId, dropId, 'inside');
     }
-
-    // /* ---------- 1. 成为子节点 ---------- */
-    // if (!dropToGap && dropPosition === 0) {
-    //   console.log(`把 ${dragKey} 放进 ${dropKey} 的内部`);
-    //   return;
-    // }
-
-    // /* ---------- 2. 插在缝隙（同级） ---------- */
-    // // 计算“插在目标节点之后第 offset 个位置”
-    // const offset = dropPosition > 1 ? (dropPosition - 1) / 2 : 0;
-    // console.log(`把 ${dragKey} 插在 ${dropKey} 之后第 ${offset} 个位置`);
-
-    // /* ---------- 3. （可选）算出父节点 key 和 在父节点中的插入索引 ---------- */
-    // const dropPos = info.node.pos; // 例： "0-2-1"
-    // const posArr = dropPos.split('-').map(Number);
-    // const insertIndex = posArr[posArr.length - 1] + 1 + offset; // 在父节点中的插入索引
-    // posArr.pop(); // 去掉最后一级 → 父路径
-    // const parentPos = posArr.join('-'); // 父节点的 pos
-
-    // // 如果你维护了一个  pos->key  的 Map，这里就能直接拿到 parentKey
-    // // const parentKey = posMap.get(parentPos);
-
-    // console.log(`父节点 pos=${parentPos}，插入索引=${insertIndex}`);
   };
 
   useEffect(() => {
@@ -57,8 +42,8 @@ export default function Structure() {
           title: (
             <Space align="center">
               <span>{item.name}</span>
-              {/* <Tag>{item.type}</Tag> */}
-              <Tag>{item.id}</Tag>
+              <Tag>{item.type}</Tag>
+              {/* <Tag>{item.id}</Tag> */}
             </Space>
           ),
           key: item.id,
@@ -80,9 +65,6 @@ export default function Structure() {
       treeData={struct}
       draggable={{
         icon: false,
-      }}
-      onDragStart={(obj) => {
-        console.log('onDragStart', obj);
       }}
       onDrop={onDrop}
     />

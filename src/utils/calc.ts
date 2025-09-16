@@ -1,14 +1,17 @@
-import type { TreeDataNode } from "antd";
 
-export function calcNewStruct(struct: TreeDataNode[], dragKey: string, dropKey: string) {
+export function findArrAndIndex<T extends { id: string; childNode?: T[]; }>(arr: T[], key: string): { arr: T[]; index: number; } | undefined {
+  for (let i = 0; i < arr.length; i++) {
+    const node = arr[i];
+    if (node.id === key) return { arr, index: i }; // 本级命中
 
-  console.log('dragNode', findNode(struct, dragKey));
-  // console.log('dropNode', findNode(struct, dropKey));
+    if (node.childNode) { // 下探
+      const res = findArrAndIndex(node.childNode, key);
+      if (res) return res;
+    }
+  }
+  return undefined;
 }
 
-function findNode(struct, key) {
-  console.log('struct', struct);
-  struct.forEach(item => {
+export const removeIndex = <T>(arr: Array<T>, index: number) => (arr.splice(index, 1));
 
-  });
-}
+export const insertIndex = <T>(arr: Array<T>, index: number, item: T) => (arr.splice(index, 0, item), arr);
