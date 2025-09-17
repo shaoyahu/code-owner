@@ -17,7 +17,7 @@ export default function EditRightPanel() {
       label: (
         <div>
           <ControlOutlined />
-          <span>属性</span>
+          <span>组件设置</span>
         </div>
       ),
       children: <ComponentProp />,

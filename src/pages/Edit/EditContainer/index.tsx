@@ -1,7 +1,7 @@
-import { getComponentConfigByType } from '../../../components/componentLib';
-import { WEB_PAGE_CONFIG } from '../../../constant/defaultConfig';
-import useGetPageInfo from '../../../hooks/useGetPageInfo';
-import type { BasicComponentPropsType } from '../../../types';
+import { getComponentConfigByType } from "../../../components/componentLib";
+import { WEB_PAGE_CONFIG } from "../../../constant/defaultConfig";
+import useGetPageInfo from "../../../hooks/useGetPageInfo";
+import type { BasicComponentPropsType } from "../../../types";
 
 export default function EditContainer() {
   const { height, width } = WEB_PAGE_CONFIG;
@@ -34,7 +34,7 @@ function genComponent(item: BasicComponentPropsType) {
   const { Component } = componentConfig;
   const { childNode = [], ...rest } = item;
 
-  if (item.id == '1') {
+  if (item.id == "1") {
     // console.log('item', item);
   }
 
@@ -42,7 +42,11 @@ function genComponent(item: BasicComponentPropsType) {
     return (
       <>
         <Component {...rest}>
-          {childNode?.map((child) => genComponent(child))}
+          {childNode?.map((child) => (
+            <div key={child.id} className="!m-1">
+              {genComponent(child)}
+            </div>
+          ))}
         </Component>
       </>
     );

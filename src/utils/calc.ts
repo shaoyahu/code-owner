@@ -1,10 +1,17 @@
-
-export function findArrAndIndex<T extends { id: string; childNode?: T[]; }>(arr: T[], key: string): { arr: T[]; index: number; node: T; } | undefined {
+// arr: 目标数据
+// key: 目标节点 id
+// 在 <T extends { id: string; childNode?: T[]; }> 数据结构中
+// return { arr: 目标节点所在数组; index: 目标节点在数组中的索引; node: 目标节点}
+export function findArrAndIndex<T extends { id: string; childNode?: T[] }>(
+  arr: T[],
+  key: string
+): { arr: T[]; index: number; node: T } | undefined {
   for (let i = 0; i < arr.length; i++) {
     const node = arr[i];
     if (node.id === key) return { arr, index: i, node: arr[i] }; // 本级命中
 
-    if (node.childNode) { // 下探
+    if (node.childNode) {
+      // 下探
       const res = findArrAndIndex(node.childNode, key);
       if (res) return res;
     }
@@ -12,6 +19,43 @@ export function findArrAndIndex<T extends { id: string; childNode?: T[]; }>(arr:
   return undefined;
 }
 
-export const removeIndex = <T>(arr: Array<T>, index: number) => (arr.splice(index, 1));
+export const removeIndex = <T>(arr: Array<T>, index: number) =>
+  arr.splice(index, 1);
 
-export const insertIndex = <T>(arr: Array<T>, index: number, item: T) => (arr.splice(index, 0, item), arr);
+export const insertIndex = <T>(arr: Array<T>, index: number, item: T) => (
+  arr.splice(index, 0, item), arr
+);
+
+// 获取 min-max 数之间指定 Array<{ value: string|number; label: string }> 供 antd select 组件使用
+export const genOptions = (
+  min: number,
+  max: number,
+  config?: { type?: string; unit?: string; withUnit?: boolean; step?: number }
+): Array<{ value: string | number; label: string }> => {
+  if (min >= max) {
+    return [{ value: "Error", label: "Error, max can not less then min!" }];
+  }
+
+  const res: Array<{ value: string | number; label: string }> = [];
+
+  const {
+    type = "number",
+    unit = "",
+    withUnit = false,
+    step = 1,
+  } = config || {};
+
+  for (let i = min; i <= max; i += step) {
+    let value: string | number;
+    const label = `${i} ${unit}`;
+    if (type === "number") {
+      value = i;
+    } else {
+      value = withUnit ? `${i}${unit}` : `${i}`;
+    }
+    const option = { label, value };
+    res.push(option);
+  }
+
+  return res;
+};

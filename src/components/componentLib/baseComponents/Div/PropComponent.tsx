@@ -1,55 +1,94 @@
-import { ColorPicker, Form, Input, Select } from 'antd';
-import type { DivPropsType } from './interface';
-import { useEffect } from 'react';
+import { ColorPicker, Form, Input, Select } from "antd";
+import type { DivPropsType } from "./interface";
+import { useEffect } from "react";
+import useStore from "../../../../store";
+import { COMPONENT_SETTING_TAB } from "../../../../constant/defaultConfig";
+import { genOptions } from "../../../../utils/calc";
 
 export default function PropComponent(props: DivPropsType) {
-  const { name, tailwind, css, onChange } = props;
+  const { name, tailwind, css, event, onChange } = props;
+  const { componentSettingTab } = useStore();
   const [form] = Form.useForm();
 
   function handleValueChange() {
     const newValues = form.getFieldsValue();
-    console.log('newValues', newValues);
     if (onChange) {
       onChange(newValues);
     }
   }
 
   useEffect(() => {
-    form.setFieldsValue({ tailwind, css, name });
-  }, [tailwind, css, name, form]);
+    form.setFieldsValue({ tailwind, css, name, event });
+  }, [tailwind, css, name, form, event]);
 
   return (
     <Form
       form={form}
       onValuesChange={handleValueChange}
       layout="vertical"
-      initialValues={{ tailwind, css, name }}
+      initialValues={{ tailwind, css, name, event }}
     >
-      <Form.Item
-        name="name"
-        label="组件名称"
-        rules={[{ required: true, message: '标题必填' }]}
+      {/* 基本内容 */}
+      <div
+        className={`${
+          componentSettingTab === COMPONENT_SETTING_TAB.CONTENT ? "" : "hidden"
+        }`}
       >
-        <Input />
-      </Form.Item>
-      <Form.Item name="fontSize" label="字体大小">
-        <Select
-          options={[
-            { value: '[10px]', label: '10px' },
-            { value: '[12px]', label: '12px' },
-            { value: '[14px]', label: '14px' },
-            { value: '[16px]', label: '16px' },
-            { value: '[18px]', label: '18px' },
-            { value: '[20px]', label: '20px' },
-            { value: '4', label: '1rem' },
-            { value: '8', label: '2rem' },
-            { value: '12', label: '3rem' },
-          ]}
-        />
-      </Form.Item>
-      <Form.Item name="color" label="字体颜色">
-        <ColorPicker showText />
-      </Form.Item>
+        <Form.Item
+          name="name"
+          label="组件名称"
+          rules={[{ required: true, message: "标题必填" }]}
+        >
+          <Input />
+        </Form.Item>
+      </div>
+
+      {/* 样式 */}
+      <div
+        className={`${
+          componentSettingTab === COMPONENT_SETTING_TAB.STYLE ? "" : "hidden"
+        }`}
+      >
+        <Form.Item name={["css", "fontSize"]} label="字体大小">
+          <Select
+            options={[
+              ...genOptions(10, 40, {
+                type: "string",
+                unit: "px",
+                withUnit: true,
+                step: 2,
+              }),
+              ...genOptions(1, 6, {
+                type: "string",
+                unit: "rem",
+                withUnit: true,
+                step: 0.5,
+              }),
+            ]}
+          />
+        </Form.Item>
+        <Form.Item
+          name={["css", "color"]}
+          getValueFromEvent={(color) => color.toHexString()}
+          label="字体颜色"
+        >
+          <ColorPicker format="hex" showText />
+        </Form.Item>
+      </div>
+
+      {/* 事件 */}
+      <div
+        className={`${
+          componentSettingTab === COMPONENT_SETTING_TAB.EVENT ? "" : "hidden"
+        }`}
+      >
+        <Form.Item
+          name={["event", "onClick", "handleCode"]}
+          label="鼠标左键单击"
+        >
+          <Input.TextArea />
+        </Form.Item>
+      </div>
     </Form>
   );
 }

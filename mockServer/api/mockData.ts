@@ -11,8 +11,10 @@ export const page = {
       type: "div",
       name: "顶部 header",
       _desc: "最基础的组件，用来填充空间或包裹组件",
-      css: {},
-      tailwind: "w-full   h-[300px] bg-cyan-200",
+      css: {
+        fontSize: "12px",
+      },
+      tailwind: "h-[300px] bg-cyan-200",
       event: {
         onClick: {
           name: "onClick",
@@ -27,9 +29,7 @@ export const page = {
           _desc: "最基础的组件，用于放置文字，因为组件内是可以直接放文字的",
           text: "直接的文字",
           tailwind: "!m-2",
-          css: {
-            color: "orange",
-          },
+          css: {},
         },
         {
           id: "98",
@@ -42,7 +42,7 @@ export const page = {
               id: "98-1",
               type: "ad-button",
               name: "按钮1",
-              text: '按钮1',
+              text: "按钮1",
               css: {},
               tailwind: "text-[12px]",
               event: {},
@@ -51,7 +51,7 @@ export const page = {
               id: "98-2",
               type: "ad-button",
               name: "按钮2",
-              text: '按钮2',
+              text: "按钮2",
               css: {},
               tailwind: "text-[12px]",
               event: {},
@@ -60,7 +60,7 @@ export const page = {
               id: "98-3",
               type: "ad-button",
               name: "按钮3",
-              text: '按钮3',
+              text: "按钮3",
               css: {},
               tailwind: "text-[12px]",
               event: {},
