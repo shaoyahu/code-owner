@@ -7,10 +7,10 @@ import useStore from '../../../store';
 export default function Structure() {
   const { nodes } = useGetPageInfo();
   const [struct, setStruct] = useState<TreeDataNode[]>([]);
-  const { moveNode } = useStore();
+  const { moveNode, changeSelectedNodeId } = useStore();
 
-  const onSelect: TreeProps['onSelect'] = (selectedKeys, info) => {
-    console.log('selected', selectedKeys, info);
+  const onSelect: TreeProps['onSelect'] = (selectedKeys) => {
+    changeSelectedNodeId(selectedKeys[0] as string);
   };
 
   const onDrop: TreeProps['onDrop'] = (info) => {

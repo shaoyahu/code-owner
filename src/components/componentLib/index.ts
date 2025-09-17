@@ -14,6 +14,7 @@ export type ComponentConfigType = {
   title: string;
   type: string;
   Component: FC<ComponentPropsType>;
+  PropComponent: FC<ComponentPropsType>;
   defaultProps: ComponentPropsType;
 };
 
@@ -22,7 +23,7 @@ const componentConfigList = [DivConfig, SpanConfig, AdButtonConfig];
 type ComponentConfigGroupType = {
   groupId: number;
   groupName: string;
-  Icon: ComponentType<{ className?: string; style?: React.CSSProperties }>;
+  Icon: ComponentType<{ className?: string; style?: React.CSSProperties; }>;
   components: ComponentConfigType[];
 };
 

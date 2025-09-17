@@ -2,6 +2,7 @@ import type { BasicComponentPropsType } from "../../../../types";
 
 export type DivPropsType = React.PropsWithChildren<
   BasicComponentPropsType & {
+    onChange?: (props: DivPropsType) => void;
   }
 >;
 

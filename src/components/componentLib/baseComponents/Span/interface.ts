@@ -3,6 +3,7 @@ import type { BasicComponentPropsType } from "../../../../types";
 export type SpanPropsType = React.PropsWithChildren<
   BasicComponentPropsType & {
     text?: string;
+    onChange?: (props: SpanPropsType) => void;
   }
 >;
 

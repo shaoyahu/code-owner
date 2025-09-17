@@ -3,6 +3,7 @@ import type { BasicComponentPropsType } from "../../../../types";
 export type AdButtonPropsType = React.PropsWithChildren<
   BasicComponentPropsType & {
     text?: string;
+    onChange?: (props: AdButtonPropsType) => void;
   }
 >;
 

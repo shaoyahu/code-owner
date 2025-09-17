@@ -3,7 +3,7 @@ import useStore from "../store";
 import { getPageById } from "../api/point";
 import { useEffect } from "react";
 
-export default function useLoadPageInfo() {
+export default function useLoadPageData() {
   const { selectedPageId, resetPage } = useStore();
   const { data, loading, run } = useRequest(
     async () => getPageById(selectedPageId),

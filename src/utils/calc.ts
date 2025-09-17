@@ -1,8 +1,8 @@
 
-export function findArrAndIndex<T extends { id: string; childNode?: T[]; }>(arr: T[], key: string): { arr: T[]; index: number; } | undefined {
+export function findArrAndIndex<T extends { id: string; childNode?: T[]; }>(arr: T[], key: string): { arr: T[]; index: number; node: T; } | undefined {
   for (let i = 0; i < arr.length; i++) {
     const node = arr[i];
-    if (node.id === key) return { arr, index: i }; // 本级命中
+    if (node.id === key) return { arr, index: i, node: arr[i] }; // 本级命中
 
     if (node.childNode) { // 下探
       const res = findArrAndIndex(node.childNode, key);

@@ -1,15 +1,19 @@
 // import { immer } from 'zustand/middleware/immer';
 import type { SliceCreator } from '.';
+import type { ComponentPropsType } from '../components/componentLib';
 import type { BasicComponentPropsType, PageType } from '../types';
 import { findArrAndIndex, insertIndex, removeIndex } from '../utils/calc';
 
 export type PageSlice = {
   selectedPageId: string;
+  selectedNodeId: string;
   page: PageType;
   setPageSize: (size: { height: string; width: string; }) => void;
   resetPage: (page: PageSlice['page']) => void;
   setSelectedPageId: (id: string) => void;
   moveNode: (dragId: string, dropId: string, type: 'after' | 'before' | 'inside') => void;
+  changeSelectedNodeId: (id: string) => void;
+  updatePageNode: (id: string, props: ComponentPropsType) => void;
 };
 
 const initialPage = {
@@ -21,6 +25,7 @@ const initialPage = {
 export const createPageSlice: SliceCreator<PageSlice> = (set) => ({
   page: initialPage,
   selectedPageId: '-1',
+  selectedNodeId: '-1',
 
   setPageSize: ({ height, width }) =>
     set((state) => {
@@ -33,6 +38,8 @@ export const createPageSlice: SliceCreator<PageSlice> = (set) => ({
     set((state) => {
       state.page = page;
     }),
+
+  // 结构页中树节点移动位置
   moveNode: (dragId: string, dropId: string, type: 'after' | 'before' | 'inside') => set(state => {
     const { nodes } = state.page;
     let movedNode: BasicComponentPropsType[] = [];
@@ -55,5 +62,26 @@ export const createPageSlice: SliceCreator<PageSlice> = (set) => ({
         }
       }
     }
-  })
+  }),
+
+  // 选中指定的元素
+  changeSelectedNodeId: (id: string) => {
+    set((state) => {
+      state.selectedNodeId = id;
+    });
+  },
+
+  // 更新页面节点
+  updatePageNode: (id: string, props: ComponentPropsType) => {
+    set((state) => {
+      const { nodes } = state.page;
+      if (nodes) {
+        const nodeRes = findArrAndIndex(nodes, id);
+        if (nodeRes) {
+          const { arr: nodeArr, index: nodeIndex } = nodeRes;
+          nodeArr[nodeIndex] = { ...nodeArr[nodeIndex], ...props };
+        }
+      }
+    });
+  },
 });
