@@ -1,7 +1,10 @@
-import { getComponentConfigByType } from "../../../components/componentLib";
-import { WEB_PAGE_CONFIG } from "../../../constant/defaultConfig";
-import useGetPageInfo from "../../../hooks/useGetPageInfo";
-import type { BasicComponentPropsType } from "../../../types";
+import { getComponentConfigByType } from '../../../components/componentLib';
+import {
+  DEFAULT_INITIAL_STYLE,
+  WEB_PAGE_CONFIG,
+} from '../../../constant/defaultConfig';
+import useGetPageInfo from '../../../hooks/useGetPageInfo';
+import type { BasicComponentPropsType } from '../../../types';
 
 export default function EditContainer() {
   const { height, width } = WEB_PAGE_CONFIG;
@@ -16,7 +19,7 @@ export default function EditContainer() {
       <div className="bg-white w-full h-full">
         {nodes?.map((item) => {
           return (
-            <div key={item.id} className="!m-1">
+            <div key={item.id} className="!m-1" style={DEFAULT_INITIAL_STYLE}>
               {genComponent(item)}
             </div>
           );
@@ -34,7 +37,7 @@ function genComponent(item: BasicComponentPropsType) {
   const { Component } = componentConfig;
   const { childNode = [], ...rest } = item;
 
-  if (item.id == "1") {
+  if (item.id == '1') {
     // console.log('item', item);
   }
 
@@ -43,7 +46,7 @@ function genComponent(item: BasicComponentPropsType) {
       <>
         <Component {...rest}>
           {childNode?.map((child) => (
-            <div key={child.id} className="!m-1">
+            <div key={child.id} className="!m-1" style={DEFAULT_INITIAL_STYLE}>
               {genComponent(child)}
             </div>
           ))}

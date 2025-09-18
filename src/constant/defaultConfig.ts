@@ -9,7 +9,15 @@ export const H5_PAGE_CONFIG = {
 };
 
 export const COMPONENT_SETTING_TAB = {
-  CONTENT: "基本内容",
+  CONTENT: "属性",
   STYLE: "样式",
   EVENT: "事件",
+};
+
+
+export const DEFAULT_INITIAL_STYLE = {
+  fontSize: 'initial',
+  color: 'initial',
+  width: 'initial',
+  height: 'initial',
 };
