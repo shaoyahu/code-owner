@@ -1,11 +1,14 @@
 // arr: 目标数据
 // key: 目标节点 id
 // 在 <T extends { id: string; childNode?: T[]; }> 数据结构中
+
+import { ICON_MAP } from "../constant/iconMap";
+
 // return { arr: 目标节点所在数组; index: 目标节点在数组中的索引; node: 目标节点}
-export function findArrAndIndex<T extends { id: string; childNode?: T[] }>(
+export function findArrAndIndex<T extends { id: string; childNode?: T[]; }>(
   arr: T[],
   key: string
-): { arr: T[]; index: number; node: T } | undefined {
+): { arr: T[]; index: number; node: T; } | undefined {
   for (let i = 0; i < arr.length; i++) {
     const node = arr[i];
     if (node.id === key) return { arr, index: i, node: arr[i] }; // 本级命中
@@ -30,13 +33,13 @@ export const insertIndex = <T>(arr: Array<T>, index: number, item: T) => (
 export const genOptions = (
   min: number,
   max: number,
-  config?: { type?: string; unit?: string; withUnit?: boolean; step?: number }
-): Array<{ value: string | number; label: string }> => {
+  config?: { type?: string; unit?: string; withUnit?: boolean; step?: number; }
+): Array<{ value: string | number; label: string; }> => {
   if (min >= max) {
     return [{ value: "Error", label: "Error, max can not less then min!" }];
   }
 
-  const res: Array<{ value: string | number; label: string }> = [];
+  const res: Array<{ value: string | number; label: string; }> = [];
 
   const {
     type = "number",
@@ -59,3 +62,8 @@ export const genOptions = (
 
   return res;
 };
+
+
+export function getIcon(icon: string) {
+  return ICON_MAP[icon as keyof typeof ICON_MAP] || null;
+}

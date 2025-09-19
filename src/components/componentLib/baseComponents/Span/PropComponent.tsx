@@ -25,7 +25,7 @@ export default function PropComponent(props: SpanPropsType) {
       form={form}
       handleValueChange={handleValueChange}
       initialValues={props}
-      basicContent={
+      otherAttr={
         <Form.Item
           name="text"
           label="文本内容"

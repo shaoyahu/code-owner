@@ -46,6 +46,10 @@ export const page = {
               css: {},
               tailwind: "text-[12px]",
               event: {},
+              attr: {
+                block: true,
+                type: 'default'
+              }
             },
             {
               id: "98-2",
@@ -55,6 +59,9 @@ export const page = {
               css: {},
               tailwind: "text-[12px]",
               event: {},
+              attr: {
+                block: false,
+              }
             },
             {
               id: "98-3",

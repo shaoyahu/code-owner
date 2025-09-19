@@ -8,6 +8,7 @@ export type BasicComponentPropsType = {
   tailwind?: string;
   event?: Record<string, Record<string, string>>;
   childNode?: BasicComponentPropsType[];
+  attr?: Record<string, unknown>;
 };
 
 export type StateType = {

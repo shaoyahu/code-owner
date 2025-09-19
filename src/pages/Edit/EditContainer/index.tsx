@@ -1,10 +1,12 @@
-import { getComponentConfigByType } from '../../../components/componentLib';
+import {
+  getComponentConfigByType,
+  type ComponentPropsType,
+} from '../../../components/componentLib';
 import {
   DEFAULT_INITIAL_STYLE,
   WEB_PAGE_CONFIG,
 } from '../../../constant/defaultConfig';
 import useGetPageInfo from '../../../hooks/useGetPageInfo';
-import type { BasicComponentPropsType } from '../../../types';
 
 export default function EditContainer() {
   const { height, width } = WEB_PAGE_CONFIG;
@@ -29,7 +31,7 @@ export default function EditContainer() {
   );
 }
 
-function genComponent(item: BasicComponentPropsType) {
+function genComponent(item: ComponentPropsType) {
   const componentConfig = getComponentConfigByType(item.type);
   if (!componentConfig) {
     return null;
@@ -37,8 +39,8 @@ function genComponent(item: BasicComponentPropsType) {
   const { Component } = componentConfig;
   const { childNode = [], ...rest } = item;
 
-  if (item.id == '1') {
-    // console.log('item', item);
+  if (item.id == '98-1') {
+    // console.log('attr',  Component);
   }
 
   if (childNode && childNode.length > 0) {

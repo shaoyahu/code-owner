@@ -16,19 +16,14 @@ type ComponentSettingFormProps<T> = {
   form: FormInstance;
   handleValueChange: () => void;
   initialValues?: InitialType<T>;
-  // basicContent?: (prop: T) => React.ReactNode;
-  basicContent?: React.ReactNode;
+  // otherAttr?: (prop: T) => React.ReactNode;
+  otherAttr?: React.ReactNode;
 };
 
 export default function ComponentSettingForm<T>(
   props: ComponentSettingFormProps<T>
 ) {
-  const {
-    form,
-    handleValueChange,
-    initialValues,
-    basicContent = <></>,
-  } = props;
+  const { form, handleValueChange, initialValues, otherAttr = <></> } = props;
   console.log('initialValues', initialValues);
   const { componentSettingTab } = useStore();
   return (
@@ -62,7 +57,7 @@ export default function ComponentSettingForm<T>(
         >
           <Input.TextArea />
         </Form.Item>
-        {basicContent}
+        {otherAttr}
       </div>
 
       {/* 样式 */}
@@ -79,6 +74,7 @@ export default function ComponentSettingForm<T>(
         </Form.Item>
         <Form.Item name={['css', 'fontSize']} label="字体大小">
           <Select
+            allowClear
             options={[
               ...genOptions(10, 40, {
                 type: 'string',
