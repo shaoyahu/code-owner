@@ -14,7 +14,7 @@ export const page = {
       css: {
         fontSize: "12px",
       },
-      tailwind: "h-[300px] bg-cyan-200",
+      tailwind: "h-[300px]",
       event: {
         onClick: {
           name: "onClick",
@@ -36,7 +36,7 @@ export const page = {
           type: "div",
           name: "子元素div",
           text: "no",
-          tailwind: "bg-pink-200 h-10 flex items-center justify-around",
+          tailwind: "bg-gray-200 h-10 flex items-center justify-around",
           childNode: [
             {
               id: "98-1",
@@ -98,7 +98,7 @@ export const page = {
       name: "底部 footer",
       _desc: "最基础的组件，用来填充空间或包裹组件",
       css: {},
-      tailwind: "w-[300px] h-[300px] bg-cyan-200",
+      tailwind: "w-[300px] h-[300px]",
       event: {
         onClick: {
           name: "onClick",
