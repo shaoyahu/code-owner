@@ -1,14 +1,17 @@
-import EditContainer from './EditContainer';
-import EditLeftPanel from './EditLeftPanel';
-import EditRightPanel from './EditRightPanel';
-import useLoadPageData from '../../hooks/useLoadPageData';
-import { Spin } from 'antd';
+import EditContainer from "./EditContainer";
+import EditLeftPanel from "./EditLeftPanel";
+import EditRightPanel from "./EditRightPanel";
+import useLoadPageData from "../../hooks/useLoadPageData";
+import { Spin } from "antd";
+import EditHeader from "./EditHeader";
 
 export default function Edit() {
   const { loading } = useLoadPageData();
   return (
     <div className="flex flex-col gap-4 !pb-4 h-full">
-      <div className="bg-white h-[64px]">header</div>
+      <div className="bg-white h-[64px]">
+        <EditHeader />
+      </div>
       <div className="flex flex-1 justify-around gap-4 !px-4">
         <div className="bg-white !px-4 rounded-md w-[300px]">
           <EditLeftPanel />

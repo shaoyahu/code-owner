@@ -34,5 +34,5 @@ export default function EditRightPanel() {
     },
   ];
 
-  return <Tabs activeKey={activeKey} items={tabsItems} />;
+  return <Tabs defaultActiveKey={activeKey} items={tabsItems} />;
 }

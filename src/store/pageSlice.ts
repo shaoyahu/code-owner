@@ -10,7 +10,7 @@ export type PageSlice = {
   selectedNodeId: string;
   page: PageType;
   componentSettingTab: string;
-  setPageSize: (size: { height: string; width: string }) => void;
+  updatePage: (page: PageSlice["page"]) => void;
   resetPage: (page: PageSlice["page"]) => void;
   setSelectedPageId: (id: string) => void;
   moveNode: (
@@ -35,10 +35,12 @@ export const createPageSlice: SliceCreator<PageSlice> = (set) => ({
   selectedNodeId: "-1",
   componentSettingTab: COMPONENT_SETTING_TAB.CONTENT,
 
-  setPageSize: ({ height, width }) =>
+  updatePage: (page) =>
     set((state) => {
-      state.page.page.height = height;
-      state.page.page.width = width;
+      state.page = {
+        ...state.page,
+        ...page,
+      };
     }),
 
   setSelectedPageId: (id) => set({ selectedPageId: id }),

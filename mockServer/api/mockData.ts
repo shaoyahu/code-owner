@@ -1,10 +1,13 @@
 export const page = {
   name: "MyButton.tsx",
   page: {
-    height: "800px",
-    width: "1100px",
+    height: "600px",
+    width: "800px",
   },
-  imports: ["import { useNavigate } from 'react-router-dom'"],
+  imports: [
+    "import { useNavigate } from 'react-router-dom'",
+    "import { Input } from 'antd'",
+  ],
   nodes: [
     {
       id: "1",
@@ -48,8 +51,8 @@ export const page = {
               event: {},
               attr: {
                 block: true,
-                type: 'default'
-              }
+                type: "default",
+              },
             },
             {
               id: "98-2",
@@ -61,7 +64,7 @@ export const page = {
               event: {},
               attr: {
                 block: false,
-              }
+              },
             },
             {
               id: "98-3",
@@ -167,6 +170,7 @@ export const page = {
       name: "count",
       _desc:
         "name 是由用户决定的，用户一旦决定了 name 那么 setState 函数名就会是固定的",
+      type: "number",
       value: 0,
     },
   ],

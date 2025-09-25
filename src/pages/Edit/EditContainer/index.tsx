@@ -1,17 +1,17 @@
 import {
   getComponentConfigByType,
   type ComponentPropsType,
-} from '../../../components/componentLib';
+} from "../../../components/componentLib";
 import {
   DEFAULT_INITIAL_STYLE,
   WEB_PAGE_CONFIG,
-} from '../../../constant/defaultConfig';
-import useGetPageInfo from '../../../hooks/useGetPageInfo';
+} from "../../../constant/defaultConfig";
+import useGetPageInfo from "../../../hooks/useGetPageInfo";
 
 export default function EditContainer() {
-  const { height, width } = WEB_PAGE_CONFIG;
   const page = useGetPageInfo();
-  const { nodes } = page;
+  const { nodes, page: pageSize = WEB_PAGE_CONFIG } = page;
+  const { height, width } = pageSize;
   return (
     <div
       className="flex justify-center items-center shadow-[0_0_10px_5px_rgba(0,0,0,0.1)]"
@@ -39,7 +39,7 @@ function genComponent(item: ComponentPropsType) {
   const { Component } = componentConfig;
   const { childNode = [], ...rest } = item;
 
-  if (item.id == '98-1') {
+  if (item.id == "98-1") {
     // console.log('attr',  Component);
   }
 
