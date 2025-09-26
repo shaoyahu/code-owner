@@ -19,7 +19,7 @@ export default defineConfig({
   plugins: [tailwindcss(), react()],
   server: {
     host: '0.0.0.0',  // 允许局域网访问
-    // port: 5555,        // 你的端口号,
+    port: 5857,        // 你的端口号,
     proxy: {
       '/api': {
         target: `http://${getLocalIP()}:7030`,

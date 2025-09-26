@@ -1,13 +1,13 @@
-import { useDroppable } from "@dnd-kit/core";
+import { useDroppable } from '@dnd-kit/core';
 import {
   getComponentConfigByType,
   type ComponentPropsType,
-} from "../../../components/componentLib";
+} from '../../../components/componentLib';
 import {
   DEFAULT_INITIAL_STYLE,
   WEB_PAGE_CONFIG,
-} from "../../../constant/defaultConfig";
-import useGetPageInfo from "../../../hooks/useGetPageInfo";
+} from '../../../constant/defaultConfig';
+import useGetPageInfo from '../../../hooks/useGetPageInfo';
 
 export default function EditContainer() {
   const page = useGetPageInfo();
@@ -15,7 +15,7 @@ export default function EditContainer() {
   const { height, width } = pageSize;
 
   const { setNodeRef } = useDroppable({
-    id: "edit-container",
+    id: 'edit-container',
   });
   return (
     <div
@@ -27,7 +27,7 @@ export default function EditContainer() {
         {nodes?.map((item) => {
           return (
             <div key={item.id} className="!m-1" style={DEFAULT_INITIAL_STYLE}>
-              {genComponent(item)}
+              {GenComponent(item)}
             </div>
           );
         })}
@@ -36,7 +36,7 @@ export default function EditContainer() {
   );
 }
 
-function genComponent(item: ComponentPropsType) {
+function GenComponent(item: ComponentPropsType) {
   const componentConfig = getComponentConfigByType(item.type);
   if (!componentConfig) {
     return null;
@@ -44,8 +44,8 @@ function genComponent(item: ComponentPropsType) {
   const { Component } = componentConfig;
   const { childNode = [], ...rest } = item;
 
-  if (item.id == "98-1") {
-    // console.log('attr',  Component);
+  if (item.id == '98-1') {
+    // console.log('item', item);
   }
 
   if (childNode && childNode.length > 0) {
@@ -54,7 +54,7 @@ function genComponent(item: ComponentPropsType) {
         <Component {...rest}>
           {childNode?.map((child) => (
             <div key={child.id} className="!m-1" style={DEFAULT_INITIAL_STYLE}>
-              {genComponent(child)}
+              {GenComponent(child)}
             </div>
           ))}
         </Component>

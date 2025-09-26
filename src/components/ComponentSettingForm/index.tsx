@@ -24,7 +24,7 @@ export default function ComponentSettingForm<T>(
   props: ComponentSettingFormProps<T>
 ) {
   const { form, handleValueChange, initialValues, otherAttr = <></> } = props;
-  console.log('initialValues', initialValues);
+  // console.log('initialValues', initialValues);
   const { componentSettingTab } = useStore();
   return (
     <Form
