@@ -3,9 +3,8 @@ import {
   componentConfigGroup,
   type ComponentConfigType,
 } from "../../../components/componentLib";
-{
-  /* <RightCircleOutlined /> <DownCircleOutlined /> */
-}
+import { useDraggable } from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
 import type { ReactNode } from "react";
 import { DownCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 const { Text } = Typography;
@@ -33,7 +32,7 @@ export default function ComponentLib() {
         ),
         classNames: {
           header: "bg-gray-100",
-          body: "overflow-hidden !py-1 !px-2",
+          body: "!py-1 !px-2",
         },
       },
     ];
@@ -60,14 +59,24 @@ export default function ComponentLib() {
 
 function GenComponent({ c }: { c: ComponentConfigType }): ReactNode {
   const { type, title, Component } = c;
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: type,
+  });
+  const style = {
+    transform: CSS.Translate.toString(transform),
+  };
 
   function handleClick() {
     console.log("Component", Component);
   }
   return (
     <div
+      ref={setNodeRef}
+      style={style}
+      {...listeners}
+      {...attributes}
       key={type}
-      className="bg-white hover:bg-gray-200 !my-1 !pl-8 rounded-md h-12 leading-12 cursor-pointer"
+      className="z-50 bg-white hover:bg-gray-200 !my-1 !pl-8 rounded-md h-12 leading-12 cursor-pointer"
       onClick={handleClick}
     >
       <Text>{title}</Text>

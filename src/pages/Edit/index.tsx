@@ -3,26 +3,33 @@ import EditLeftPanel from "./EditLeftPanel";
 import EditRightPanel from "./EditRightPanel";
 import useLoadPageData from "../../hooks/useLoadPageData";
 import { Spin } from "antd";
+import { DndContext } from "@dnd-kit/core";
 import EditHeader from "./EditHeader";
 
 export default function Edit() {
   const { loading } = useLoadPageData();
   return (
-    <div className="flex flex-col gap-4 !pb-4 h-full">
-      <div className="bg-white h-[64px]">
-        <EditHeader />
+    <DndContext
+      onDragEnd={(e) => {
+        console.log("onDragEnd", e);
+      }}
+    >
+      <div className="flex flex-col gap-4 !pb-4 h-full">
+        <div className="bg-white h-[64px]">
+          <EditHeader />
+        </div>
+        <div className="flex flex-1 justify-around gap-4 !px-4">
+          <div className="bg-white !px-4 rounded-md w-[300px]">
+            <EditLeftPanel />
+          </div>
+          <div className="flex flex-1 justify-center items-center rounded-md">
+            {loading ? <Spin size="large" /> : <EditContainer />}
+          </div>
+          <div className="bg-white !px-4 rounded-md w-[300px]">
+            <EditRightPanel />
+          </div>
+        </div>
       </div>
-      <div className="flex flex-1 justify-around gap-4 !px-4">
-        <div className="bg-white !px-4 rounded-md w-[300px]">
-          <EditLeftPanel />
-        </div>
-        <div className="flex flex-1 justify-center items-center rounded-md">
-          {loading ? <Spin size="large" /> : <EditContainer />}
-        </div>
-        <div className="bg-white !px-4 rounded-md w-[300px]">
-          <EditRightPanel />
-        </div>
-      </div>
-    </div>
+    </DndContext>
   );
 }
