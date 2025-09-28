@@ -1,13 +1,10 @@
-import { useDroppable } from '@dnd-kit/core';
+import { useDroppable } from "@dnd-kit/core";
 import {
   getComponentConfigByType,
   type ComponentPropsType,
-} from '../../../components/componentLib';
-import {
-  DEFAULT_INITIAL_STYLE,
-  WEB_PAGE_CONFIG,
-} from '../../../constant/defaultConfig';
-import useGetPageInfo from '../../../hooks/useGetPageInfo';
+} from "../../../components/componentLib";
+import { WEB_PAGE_CONFIG } from "../../../constant/defaultConfig";
+import useGetPageInfo from "../../../hooks/useGetPageInfo";
 
 export default function EditContainer() {
   const page = useGetPageInfo();
@@ -15,7 +12,7 @@ export default function EditContainer() {
   const { height, width } = pageSize;
 
   const { setNodeRef } = useDroppable({
-    id: 'edit-container',
+    id: "edit-container",
   });
   return (
     <div
@@ -25,11 +22,7 @@ export default function EditContainer() {
       {/* 下方这个 div 为真正 tsx 页面返回元素 */}
       <div ref={setNodeRef} className="bg-white w-full h-full">
         {nodes?.map((item) => {
-          return (
-            <div key={item.id} className="!m-1" style={DEFAULT_INITIAL_STYLE}>
-              {GenComponent(item)}
-            </div>
-          );
+          return GenComponent(item);
         })}
       </div>
     </div>
@@ -44,26 +37,22 @@ function GenComponent(item: ComponentPropsType) {
   const { Component } = componentConfig;
   const { childNode = [], ...rest } = item;
 
-  if (item.id == '98-1') {
+  if (item.id == "98-1") {
     // console.log('item', item);
   }
 
   if (childNode && childNode.length > 0) {
     return (
       <>
-        <Component {...rest}>
-          {childNode?.map((child) => (
-            <div key={child.id} className="!m-1" style={DEFAULT_INITIAL_STYLE}>
-              {GenComponent(child)}
-            </div>
-          ))}
+        <Component {...rest} key={item.id}>
+          {childNode?.map((child) => GenComponent(child))}
         </Component>
       </>
     );
   } else {
     return (
       <>
-        <Component {...rest} />
+        <Component {...rest} key={item.id} />
       </>
     );
   }

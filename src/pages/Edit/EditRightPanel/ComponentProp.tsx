@@ -1,23 +1,23 @@
-import { Segmented } from 'antd';
+import { Segmented } from "antd";
 import {
   getComponentConfigByType,
   type ComponentPropsType,
-} from '../../../components/componentLib';
-import useGetNodeInfo from '../../../hooks/useGetNodeInfo';
-import useStore from '../../../store';
-import { COMPONENT_SETTING_TAB } from '../../../constant/defaultConfig';
+} from "../../../components/componentLib";
+import useGetNodeInfo from "../../../hooks/useGetNodeInfo";
+import useStore from "../../../store";
+import { COMPONENT_SETTING_TAB } from "../../../constant/defaultConfig";
 
 export default function ComponentProp() {
   const { updatePageNode, changeComponentSettingTab } = useStore();
   const node = useGetNodeInfo();
 
   if (!node) {
-    return <div style={{ textAlign: 'center' }}>未选中组件</div>;
+    return <div style={{ textAlign: "center" }}>未选中组件</div>;
   }
   const componentConfig = getComponentConfigByType(node.type);
 
   if (!componentConfig) {
-    return <div style={{ textAlign: 'center' }}>未选中组件</div>;
+    return <div style={{ textAlign: "center" }}>未选中组件</div>;
   }
 
   const onChange = (props: ComponentPropsType) => {
@@ -31,9 +31,9 @@ export default function ComponentProp() {
 
   const { PropComponent } = componentConfig;
   return (
-    <>
+    <div className="h-full">
       <Segmented
-        className="!mb-3"
+        className=""
         defaultValue={COMPONENT_SETTING_TAB.CONTENT}
         options={Object.values(COMPONENT_SETTING_TAB)}
         onChange={(value) => {
@@ -42,6 +42,6 @@ export default function ComponentProp() {
         block
       />
       <PropComponent onChange={onChange} {...node} />
-    </>
+    </div>
   );
 }

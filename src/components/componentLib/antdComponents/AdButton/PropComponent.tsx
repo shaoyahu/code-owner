@@ -1,11 +1,11 @@
-import { Form, Input, Select, Switch, Typography } from 'antd';
-import type { AdButtonPropsType } from './interface';
-import { useEffect } from 'react';
+import { Form, Input, Select, Switch, Typography } from "antd";
+import type { AdButtonPropsType } from "./interface";
+import { useEffect } from "react";
 import ComponentSettingForm, {
   type InitialType,
-} from '../../../ComponentSettingForm';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { ICON_LIST } from '../../../../constant/iconMap';
+} from "../../../ComponentSettingForm";
+import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
+import { ICON_LIST } from "../../../../constant/iconMap";
 
 export default function PropComponent(props: AdButtonPropsType) {
   const { onChange } = props;
@@ -29,8 +29,11 @@ export default function PropComponent(props: AdButtonPropsType) {
       initialValues={props}
       otherAttr={
         <>
+          <Form.Item name="text" label="按钮文本">
+            <Input />
+          </Form.Item>
           <Form.Item
-            name={['attr', 'block']}
+            name={["attr", "block"]}
             label="宽度适配父元素"
             layout="horizontal"
           >
@@ -41,7 +44,7 @@ export default function PropComponent(props: AdButtonPropsType) {
             />
           </Form.Item>
           <Form.Item
-            name={['attr', 'type']}
+            name={["attr", "type"]}
             label="type"
             extra={
               <Typography.Text type="secondary" className="text-[10px]!">
@@ -52,40 +55,40 @@ export default function PropComponent(props: AdButtonPropsType) {
             <Select
               allowClear
               options={[
-                { label: 'Default', value: 'default' },
-                { label: 'Primary', value: 'primary' },
-                { label: 'Link', value: 'link' },
-                { label: 'Text', value: 'text' },
-                { label: 'Dashed', value: 'dashed' },
+                { label: "Default", value: "default" },
+                { label: "Primary", value: "primary" },
+                { label: "Link", value: "link" },
+                { label: "Text", value: "text" },
+                { label: "Dashed", value: "dashed" },
               ]}
             />
           </Form.Item>
-          <Form.Item name={['attr', 'variant']} label="variant">
+          <Form.Item name={["attr", "variant"]} label="variant">
             <Select
               allowClear
               options={[
-                { label: 'Outlined', value: 'outlined' },
-                { label: 'Solid', value: 'solid' },
-                { label: 'Filled', value: 'filled' },
-                { label: 'Text', value: 'text' },
-                { label: 'Dashed', value: 'dashed' },
+                { label: "Outlined", value: "outlined" },
+                { label: "Solid", value: "solid" },
+                { label: "Filled", value: "filled" },
+                { label: "Text", value: "text" },
+                { label: "Dashed", value: "dashed" },
               ]}
             />
           </Form.Item>
-          <Form.Item name={['attr', 'color']} label="color">
+          <Form.Item name={["attr", "color"]} label="color">
             <Select
               allowClear
               options={[
-                { label: 'Default', value: 'default' },
-                { label: 'Primary', value: 'primary' },
-                { label: 'Danger', value: 'danger' },
+                { label: "Default", value: "default" },
+                { label: "Primary", value: "primary" },
+                { label: "Danger", value: "danger" },
               ]}
             />
           </Form.Item>
-          <Form.Item name={['attr', 'disabled']} label="disabled">
+          <Form.Item name={["attr", "disabled"]} label="disabled">
             <Input placeholder="exp: {loading}" />
           </Form.Item>
-          <Form.Item name={['attr', 'icon']} label="icon">
+          <Form.Item name={["attr", "icon"]} label="icon">
             <Select allowClear options={ICON_LIST} />
           </Form.Item>
           <Form.Item>{/* <Select allowClear options={{}} /> */}</Form.Item>

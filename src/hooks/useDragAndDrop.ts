@@ -6,6 +6,7 @@ export default function useDragAndDrop(id: string) {
     listeners,
     setNodeRef: dragRef,
     transform,
+    isDragging,
   } = useDraggable({
     id,
   });
@@ -21,6 +22,7 @@ export default function useDragAndDrop(id: string) {
     listeners,
     setNodeRef,
     transform,
+    isDragging,
     isOver,
   };
 }

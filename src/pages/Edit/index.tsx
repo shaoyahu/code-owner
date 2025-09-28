@@ -18,7 +18,7 @@ export default function Edit() {
         <div className="bg-white h-[64px]">
           <EditHeader />
         </div>
-        <div className="flex flex-1 justify-around gap-4 !px-4">
+        <div className="flex flex-1 justify-around gap-4 !px-4 min-h-0">
           <div className="bg-white !px-4 rounded-md w-[300px]">
             <EditLeftPanel />
           </div>
@@ -27,6 +27,9 @@ export default function Edit() {
           </div>
           <div className="bg-white !px-4 rounded-md w-[300px]">
             <EditRightPanel />
+            {/* <div className="bg-pink-300 !p-3 h-full overflow-y-scroll">
+              <div className="bg-cyan-300 h-[1500px]"></div>
+            </div> */}
           </div>
         </div>
       </div>
