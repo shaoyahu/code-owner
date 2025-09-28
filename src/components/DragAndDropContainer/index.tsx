@@ -1,20 +1,25 @@
-import { DEFAULT_INITIAL_STYLE } from "../../constant/defaultConfig";
-import useDragAndDrop from "../../hooks/useDragAndDrop";
-import { CSS } from "@dnd-kit/utilities";
+import { DEFAULT_INITIAL_STYLE } from '../../constant/defaultConfig';
+import useDragAndDrop from '../../hooks/useDragAndDrop';
+import { CSS } from '@dnd-kit/utilities';
 
 type DragAndDropContainerType = {
   id: string;
   children: React.ReactNode;
   block?: boolean;
+  adButtonData?: { block?: boolean };
 };
 export default function DragAndDropContainer(props: DragAndDropContainerType) {
-  const { id, children, block = false } = props;
+  const { id, children, block = false, adButtonData = {} } = props;
   const { attributes, listeners, setNodeRef, transform, isDragging, isOver } =
     useDragAndDrop(id);
 
+  const judgeBlock = () => {
+    return block || adButtonData?.block;
+  };
+
   return (
     <>
-      {block ? (
+      {judgeBlock() ? (
         <div
           ref={setNodeRef}
           style={{
@@ -22,8 +27,8 @@ export default function DragAndDropContainer(props: DragAndDropContainerType) {
             transform: CSS.Translate.toString(transform),
           }}
           className={`${
-            isDragging && "border! border-dashed! border-[#008cff]! m-1!"
-          } ${isOver && "bg-[#b4d2ff]! p-1!"}`}
+            isDragging && 'border! border-dashed! border-[#008cff]! m-1!'
+          } ${isOver && 'bg-[#b4d2ff]! p-1!'}`}
           {...listeners}
           {...attributes}
         >
@@ -37,8 +42,8 @@ export default function DragAndDropContainer(props: DragAndDropContainerType) {
             transform: CSS.Translate.toString(transform),
           }}
           className={`inline-block ${
-            isDragging && "border! border-dashed! border-[#008cff]! m-1!"
-          } ${isOver && "bg-[#b4d2ff]! p-1!"}`}
+            isDragging && 'border! border-dashed! border-[#008cff]! m-1!'
+          } ${isOver && 'bg-[#b4d2ff]! p-1!'}`}
           {...listeners}
           {...attributes}
         >

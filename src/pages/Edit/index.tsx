@@ -1,17 +1,41 @@
-import EditContainer from "./EditContainer";
-import EditLeftPanel from "./EditLeftPanel";
-import EditRightPanel from "./EditRightPanel";
-import useLoadPageData from "../../hooks/useLoadPageData";
-import { Spin } from "antd";
-import { DndContext } from "@dnd-kit/core";
-import EditHeader from "./EditHeader";
+import EditContainer from './EditContainer';
+import EditLeftPanel from './EditLeftPanel';
+import EditRightPanel from './EditRightPanel';
+import useLoadPageData from '../../hooks/useLoadPageData';
+import { Spin } from 'antd';
+import {
+  closestCenter,
+  closestCorners,
+  DndContext,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import EditHeader from './EditHeader';
+import useStore from '../../store';
 
 export default function Edit() {
   const { loading } = useLoadPageData();
+  const { moveNode } = useStore();
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: { distance: 8 },
+    })
+  );
+
   return (
     <DndContext
+      // sensors={sensors}
+      // collisionDetection={closestCenter}
+      onDragOver={(e) => {
+        console.log('onDragOver', e);
+      }}
       onDragEnd={(e) => {
-        console.log("onDragEnd", e);
+        console.log('onDragEnd', e);
+        const { active, over } = e;
+        if (active && over) {
+          moveNode(active.id as string, over.id as string, 'inside');
+        }
       }}
     >
       <div className="flex flex-col gap-4 !pb-4 h-full">
@@ -27,9 +51,6 @@ export default function Edit() {
           </div>
           <div className="bg-white !px-4 rounded-md w-[300px]">
             <EditRightPanel />
-            {/* <div className="bg-pink-300 !p-3 h-full overflow-y-scroll">
-              <div className="bg-cyan-300 h-[1500px]"></div>
-            </div> */}
           </div>
         </div>
       </div>

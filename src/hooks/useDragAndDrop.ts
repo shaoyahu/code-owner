@@ -9,9 +9,13 @@ export default function useDragAndDrop(id: string) {
     isDragging,
   } = useDraggable({
     id,
+    data: {
+      id
+    }
   });
   const { setNodeRef: dropRef, isOver } = useDroppable({
     id,
+    data: { id }
   });
   const setNodeRef = (el: HTMLElement | null) => {
     dragRef(el);
