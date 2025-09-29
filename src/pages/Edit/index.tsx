@@ -1,8 +1,8 @@
-import EditContainer from './EditContainer';
-import EditLeftPanel from './EditLeftPanel';
-import EditRightPanel from './EditRightPanel';
-import useLoadPageData from '../../hooks/useLoadPageData';
-import { Spin } from 'antd';
+import EditContainer from "./EditContainer";
+import EditLeftPanel from "./EditLeftPanel";
+import EditRightPanel from "./EditRightPanel";
+import useLoadPageData from "../../hooks/useLoadPageData";
+import { Spin } from "antd";
 import {
   closestCenter,
   closestCorners,
@@ -10,9 +10,9 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-} from '@dnd-kit/core';
-import EditHeader from './EditHeader';
-import useStore from '../../store';
+} from "@dnd-kit/core";
+import EditHeader from "./EditHeader";
+import useStore from "../../store";
 
 export default function Edit() {
   const { loading } = useLoadPageData();
@@ -28,13 +28,17 @@ export default function Edit() {
       // sensors={sensors}
       // collisionDetection={closestCenter}
       onDragOver={(e) => {
-        console.log('onDragOver', e);
+        console.log("onDragOver", e);
       }}
       onDragEnd={(e) => {
-        console.log('onDragEnd', e);
+        console.log("onDragEnd", e);
         const { active, over } = e;
         if (active && over) {
-          moveNode(active.id as string, over.id as string, 'inside');
+          if (active.id === over.id) {
+            return;
+          } else {
+            moveNode(active.id as string, over.id as string, "inside");
+          }
         }
       }}
     >

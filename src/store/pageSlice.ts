@@ -62,9 +62,12 @@ export const createPageSlice: SliceCreator<PageSlice> = (set) => ({
         const dragRes = findArrAndIndex(nodes, dragId);
         if (dragRes) {
           const { arr: dragArr, index: dragIndex } = dragRes;
+          const dragNode = dragArr[dragIndex];
+          // 这里需要解决拖拽嵌套的问题
+          // 在这个方法中判断如果拖放元素是拖拽元素的子元素，则取消拖拽
+          console.log("dragNode", dragNode.id, JSON.stringify(dragNode.childNode));
           movedNode = removeIndex(dragArr, dragIndex);
         }
-
         const dropRes = findArrAndIndex(nodes, dropId);
         if (dropRes) {
           const { arr: dropArr, index: dropIndex } = dropRes;
