@@ -3,13 +3,16 @@ import type { SliceCreator } from ".";
 import type { ComponentPropsType } from "../components/componentLib";
 import { COMPONENT_SETTING_TAB } from "../constant/defaultConfig";
 import type { BasicComponentPropsType, PageType } from "../types";
-import { findArrAndIndex, insertIndex, removeIndex } from "../utils/calc";
+import { findArrAndIndex, getChildNodeIdList, insertIndex, removeIndex } from "../utils/calc";
 
 export type PageSlice = {
   selectedPageId: string;
   selectedNodeId: string;
   page: PageType;
   componentSettingTab: string;
+  hoverNodeIdList: string[];
+  pushHoverNodeId: (id: string) => void;
+  popHoverNodeId: () => void;
   updatePage: (page: PageSlice["page"]) => void;
   resetPage: (page: PageSlice["page"]) => void;
   setSelectedPageId: (id: string) => void;
@@ -18,6 +21,7 @@ export type PageSlice = {
     dropId: string,
     type: "after" | "before" | "inside"
   ) => void;
+  addComponentToPage: (component: ComponentPropsType, parentId: string) => void;
   changeSelectedNodeId: (id: string) => void;
   updatePageNode: (id: string, props: ComponentPropsType) => void;
   changeComponentSettingTab: (tab: string) => void;
@@ -34,6 +38,20 @@ export const createPageSlice: SliceCreator<PageSlice> = (set) => ({
   selectedPageId: "-1",
   selectedNodeId: "-1",
   componentSettingTab: COMPONENT_SETTING_TAB.CONTENT,
+  hoverNodeIdList: [],
+
+  pushHoverNodeId: (id) =>
+    set((state) => {
+      console.log(state.hoverNodeIdList);
+      return { hoverNodeIdList: [...state.hoverNodeIdList, id] };
+    }),
+
+  popHoverNodeId: () =>
+    set((state) => ({
+      hoverNodeIdList: state.hoverNodeIdList.slice(0, -1),
+    })),
+
+
 
   updatePage: (page) =>
     set((state) => {
@@ -65,7 +83,10 @@ export const createPageSlice: SliceCreator<PageSlice> = (set) => ({
           const dragNode = dragArr[dragIndex];
           // 这里需要解决拖拽嵌套的问题
           // 在这个方法中判断如果拖放元素是拖拽元素的子元素，则取消拖拽
-          console.log("dragNode", dragNode.id, JSON.stringify(dragNode.childNode));
+          const idList = getChildNodeIdList(dragNode);
+          if (idList.includes(dropId)) {
+            return;
+          }
           movedNode = removeIndex(dragArr, dragIndex);
         }
         const dropRes = findArrAndIndex(nodes, dropId);
@@ -84,6 +105,23 @@ export const createPageSlice: SliceCreator<PageSlice> = (set) => ({
         }
       }
     }),
+
+  // 从组件库中添加组件到视图中
+  addComponentToPage: (component: ComponentPropsType, dropId: string) => {
+    set((state) => {
+      const { nodes } = state.page;
+      if (nodes) {
+        const dropRes = findArrAndIndex(nodes, dropId);
+        if (dropRes) {
+          const { arr: dropArr, index: dropIndex } = dropRes;
+          dropArr[dropIndex].childNode = [
+            component,
+            ...(dropArr[dropIndex].childNode || []),
+          ];
+        }
+      }
+    });
+  },
 
   // 选中指定的元素
   changeSelectedNodeId: (id: string) => {

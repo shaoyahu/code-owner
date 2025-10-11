@@ -1,4 +1,5 @@
 import Component from "./Component";
+import DragComponent from "./DragComponent";
 import { AdButtonDefaultProps } from "./interface";
 import PropComponent from "./PropComponent";
 
@@ -9,5 +10,6 @@ export default {
   type: "ad-button",
   Component,
   PropComponent,
+  DragComponent,
   defaultProps: AdButtonDefaultProps,
 };

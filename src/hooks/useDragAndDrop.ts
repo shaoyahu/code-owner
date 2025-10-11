@@ -10,7 +10,8 @@ export default function useDragAndDrop(id: string) {
   } = useDraggable({
     id,
     data: {
-      id
+      id,
+      origin: 'canvas'
     }
   });
   const { setNodeRef: dropRef, isOver } = useDroppable({

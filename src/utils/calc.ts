@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 // arr: 目标数据
 // key: 目标节点 id
 // 在 <T extends { id: string; childNode?: T[]; }> 数据结构中
@@ -66,4 +68,22 @@ export const genOptions = (
 
 export function getIcon(icon: string) {
   return ICON_MAP[icon as keyof typeof ICON_MAP] || null;
+}
+
+
+export function genUUID() {
+  return uuidv4();
+}
+
+export function getChildNodeIdList<T extends { id: string; childNode?: T[]; }>(
+  node: T
+): string[] {
+  const res: string[] = [];
+  if (node.childNode) {
+    node.childNode.forEach((item) => {
+      res.push(item.id);
+      res.push(...getChildNodeIdList(item));
+    });
+  }
+  return res;
 }

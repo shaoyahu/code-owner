@@ -4,7 +4,7 @@ import { getIcon } from '../../../../utils/calc';
 import DragAndDropContainer from '../../../DragAndDropContainer';
 
 export default function AdButton(props: AdButtonPropsType) {
-  const { id, text, children, tailwind, css, attr } = {
+  const { id, text, children, tailwind, css, attr, name } = {
     ...AdButtonDefaultProps,
     ...props,
   };
@@ -16,6 +16,7 @@ export default function AdButton(props: AdButtonPropsType) {
   return (
     <DragAndDropContainer
       id={id}
+      name={name}
       adButtonData={{ block: (attr?.block as boolean) || false }}
     >
       <Button

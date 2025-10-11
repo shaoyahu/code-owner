@@ -1,22 +1,25 @@
-import EditContainer from "./EditContainer";
-import EditLeftPanel from "./EditLeftPanel";
-import EditRightPanel from "./EditRightPanel";
-import useLoadPageData from "../../hooks/useLoadPageData";
-import { Spin } from "antd";
+import EditContainer from './EditContainer';
+import EditLeftPanel from './EditLeftPanel';
+import EditRightPanel from './EditRightPanel';
+import useLoadPageData from '../../hooks/useLoadPageData';
+import { Spin } from 'antd';
 import {
   closestCenter,
   closestCorners,
   DndContext,
+  DragOverlay,
   PointerSensor,
   useSensor,
   useSensors,
-} from "@dnd-kit/core";
-import EditHeader from "./EditHeader";
-import useStore from "../../store";
+} from '@dnd-kit/core';
+import EditHeader from './EditHeader';
+import useStore from '../../store';
+import { getComponentConfigByType } from '../../components/componentLib';
+import { genUUID } from '../../utils/calc';
 
 export default function Edit() {
   const { loading } = useLoadPageData();
-  const { moveNode } = useStore();
+  const { moveNode, addComponentToPage } = useStore();
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 8 },
@@ -28,16 +31,33 @@ export default function Edit() {
       // sensors={sensors}
       // collisionDetection={closestCenter}
       onDragOver={(e) => {
-        console.log("onDragOver", e);
+        // console.log("onDragOver", e);
       }}
       onDragEnd={(e) => {
-        console.log("onDragEnd", e);
+        console.log('onDragEnd', e);
         const { active, over } = e;
         if (active && over) {
           if (active.id === over.id) {
             return;
           } else {
-            moveNode(active.id as string, over.id as string, "inside");
+            if (active.data?.current?.origin === 'canvas') {
+              moveNode(active.id as string, over.id as string, 'inside');
+            }
+
+            if (active.data?.current?.origin === 'lib') {
+              const type = active.data?.current?.type;
+              const componentConfig = getComponentConfigByType(type as string);
+              console.log('componentConfig', componentConfig);
+              if (componentConfig) {
+                addComponentToPage(
+                  {
+                    ...componentConfig.defaultProps,
+                    id: genUUID(),
+                  },
+                  over.id as string
+                );
+              }
+            }
           }
         }
       }}
@@ -58,6 +78,9 @@ export default function Edit() {
           </div>
         </div>
       </div>
+      <DragOverlay>
+        <div className="bg-black w-[50px] h-[50px]"></div>
+      </DragOverlay>
     </DndContext>
   );
 }
