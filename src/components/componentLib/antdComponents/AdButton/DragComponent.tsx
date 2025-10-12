@@ -1,5 +1,9 @@
-import { Button } from 'antd';
+import { Button } from "antd";
 
 export default function DragComponent() {
-  return <Button>Button</Button>;
+  return (
+    <div className="opacity-70 w-[70px] h-[42px]">
+      <Button>Button</Button>
+    </div>
+  );
 }

@@ -1,53 +1,61 @@
-import EditContainer from './EditContainer';
-import EditLeftPanel from './EditLeftPanel';
-import EditRightPanel from './EditRightPanel';
-import useLoadPageData from '../../hooks/useLoadPageData';
-import { Spin } from 'antd';
+import EditContainer from "./EditContainer";
+import EditLeftPanel from "./EditLeftPanel";
+import EditRightPanel from "./EditRightPanel";
+import useLoadPageData from "../../hooks/useLoadPageData";
+import { Spin } from "antd";
 import {
-  closestCenter,
-  closestCorners,
+  // closestCenter,
+  // closestCorners,
   DndContext,
   DragOverlay,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core';
-import EditHeader from './EditHeader';
-import useStore from '../../store';
-import { getComponentConfigByType } from '../../components/componentLib';
-import { genUUID } from '../../utils/calc';
+  // PointerSensor,
+  // useSensor,
+  // useSensors,
+} from "@dnd-kit/core";
+import EditHeader from "./EditHeader";
+import useStore from "../../store";
+import { getComponentConfigByType } from "../../components/componentLib";
+import { genUUID } from "../../utils/calc";
+import DragDisplay from "../../components/DragDisplay";
+import { useState } from "react";
 
 export default function Edit() {
+  const [type, setType] = useState("empty");
   const { loading } = useLoadPageData();
-  const { moveNode, addComponentToPage } = useStore();
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: { distance: 8 },
-    })
-  );
+  const { moveNode, addComponentToPage, changeDragHoverNodeId } = useStore();
+  // const sensors = useSensors(
+  //   useSensor(PointerSensor, {
+  //     activationConstraint: { distance: 8 },
+  //   })
+  // );
 
   return (
     <DndContext
       // sensors={sensors}
       // collisionDetection={closestCenter}
+      onDragStart={(e) => {
+        const type = e.active.data.current?.type || "empty";
+        setType(type);
+      }}
       onDragOver={(e) => {
-        // console.log("onDragOver", e);
+        changeDragHoverNodeId(String(e.over?.id));
+        console.log("onDragOver", e);
       }}
       onDragEnd={(e) => {
-        console.log('onDragEnd', e);
+        // console.log("onDragEnd", e);
         const { active, over } = e;
         if (active && over) {
           if (active.id === over.id) {
             return;
           } else {
-            if (active.data?.current?.origin === 'canvas') {
-              moveNode(active.id as string, over.id as string, 'inside');
+            if (active.data?.current?.origin === "canvas") {
+              moveNode(active.id as string, over.id as string, "inside");
             }
 
-            if (active.data?.current?.origin === 'lib') {
+            if (active.data?.current?.origin === "lib") {
               const type = active.data?.current?.type;
               const componentConfig = getComponentConfigByType(type as string);
-              console.log('componentConfig', componentConfig);
+              console.log("componentConfig", componentConfig);
               if (componentConfig) {
                 addComponentToPage(
                   {
@@ -79,7 +87,7 @@ export default function Edit() {
         </div>
       </div>
       <DragOverlay>
-        <div className="bg-black w-[50px] h-[50px]"></div>
+        <DragDisplay type={type} />
       </DragOverlay>
     </DndContext>
   );

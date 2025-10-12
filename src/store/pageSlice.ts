@@ -3,14 +3,23 @@ import type { SliceCreator } from ".";
 import type { ComponentPropsType } from "../components/componentLib";
 import { COMPONENT_SETTING_TAB } from "../constant/defaultConfig";
 import type { BasicComponentPropsType, PageType } from "../types";
-import { findArrAndIndex, getChildNodeIdList, insertIndex, removeIndex } from "../utils/calc";
+import {
+  findArrAndIndex,
+  getChildNodeIdList,
+  insertIndex,
+  removeIndex,
+} from "../utils/calc";
 
 export type PageSlice = {
   selectedPageId: string;
   selectedNodeId: string;
   page: PageType;
   componentSettingTab: string;
+  // 鼠标移动时 hover 到的组件 id 列表，由外到内
   hoverNodeIdList: string[];
+  // 组件拖拽时 hover 到的组件 id
+  dragHoverNodeId: string;
+  changeDragHoverNodeId: (id: string) => void;
   pushHoverNodeId: (id: string) => void;
   popHoverNodeId: () => void;
   updatePage: (page: PageSlice["page"]) => void;
@@ -39,10 +48,12 @@ export const createPageSlice: SliceCreator<PageSlice> = (set) => ({
   selectedNodeId: "-1",
   componentSettingTab: COMPONENT_SETTING_TAB.CONTENT,
   hoverNodeIdList: [],
+  dragHoverNodeId: "",
+
+  changeDragHoverNodeId: (id) => set(() => ({ dragHoverNodeId: id })),
 
   pushHoverNodeId: (id) =>
     set((state) => {
-      console.log(state.hoverNodeIdList);
       return { hoverNodeIdList: [...state.hoverNodeIdList, id] };
     }),
 
@@ -50,8 +61,6 @@ export const createPageSlice: SliceCreator<PageSlice> = (set) => ({
     set((state) => ({
       hoverNodeIdList: state.hoverNodeIdList.slice(0, -1),
     })),
-
-
 
   updatePage: (page) =>
     set((state) => {

@@ -1,6 +1,6 @@
 import { useDraggable, useDroppable } from "@dnd-kit/core";
 
-export default function useDragAndDrop(id: string) {
+export default function useDragAndDrop(id: string, type: string) {
   const {
     attributes,
     listeners,
@@ -11,12 +11,13 @@ export default function useDragAndDrop(id: string) {
     id,
     data: {
       id,
-      origin: 'canvas'
-    }
+      origin: "canvas",
+      type,
+    },
   });
   const { setNodeRef: dropRef, isOver } = useDroppable({
     id,
-    data: { id }
+    data: { id, type },
   });
   const setNodeRef = (el: HTMLElement | null) => {
     dragRef(el);

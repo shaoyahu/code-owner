@@ -15,7 +15,7 @@ export type ComponentConfigType = {
   type: string;
   Component: FC<ComponentPropsType>;
   PropComponent: FC<ComponentPropsType>;
-  DragComponent?: FC<ComponentPropsType>;
+  DragComponent: FC<ComponentPropsType>;
   defaultProps: ComponentPropsType;
 };
 

@@ -1,4 +1,5 @@
 import Component from "./Component";
+import DragComponent from "./DragComponent";
 import { SpanDefaultProps } from "./interface";
 import PropComponent from "./PropComponent";
 export type { SpanPropsType } from "./interface";
@@ -8,5 +9,6 @@ export default {
   type: "span",
   Component,
   PropComponent,
+  DragComponent,
   defaultProps: SpanDefaultProps,
 };
