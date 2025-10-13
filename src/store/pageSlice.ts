@@ -11,28 +11,46 @@ import {
 } from "../utils/calc";
 
 export type PageSlice = {
+  // state
+  // 选中的页面 id
   selectedPageId: string;
+  // 选中的页面中的节点/元素/组件 id
   selectedNodeId: string;
+  // 页面的所有信息
   page: PageType;
+  // 组件设置页中的三个 tab 标签的决定当前显示的是哪个 tab
   componentSettingTab: string;
   // 鼠标移动时 hover 到的组件 id 列表，由外到内
   hoverNodeIdList: string[];
   // 组件拖拽时 hover 到的组件 id
   dragHoverNodeId: string;
+
+  // action
+  // 修改拖拽组件时 hover 到的组件的 id
   changeDragHoverNodeId: (id: string) => void;
+  // 鼠标移动中移入任意组件时将当前移入的组件 Id 添加到 hover 节点列表中
   pushHoverNodeId: (id: string) => void;
+  // 鼠标移动中移出任意组件时将 hover 节点列表的最后一个元素去除
   popHoverNodeId: () => void;
+  // 更新 page 数据
   updatePage: (page: PageSlice["page"]) => void;
+  // 重置 page 数据
   resetPage: (page: PageSlice["page"]) => void;
+  // 设置选中的页面 id
   setSelectedPageId: (id: string) => void;
+  // 在树结构中移动节点的位置
   moveNode: (
     dragId: string,
     dropId: string,
     type: "after" | "before" | "inside"
   ) => void;
+  // 从组件库中添加组件到视图中
   addComponentToPage: (component: ComponentPropsType, parentId: string) => void;
+  // 在结构树和页面中点击节点/组件/元素时更新选中的元素 Id
   changeSelectedNodeId: (id: string) => void;
+  // 根据 Id 更新指定节点/元素/组件
   updatePageNode: (id: string, props: ComponentPropsType) => void;
+  // 更改组件设置的 tab 页
   changeComponentSettingTab: (tab: string) => void;
 };
 

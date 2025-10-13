@@ -1,10 +1,10 @@
-import { useDroppable } from "@dnd-kit/core";
+import { useDroppable } from '@dnd-kit/core';
 import {
   getComponentConfigByType,
   type ComponentPropsType,
-} from "../../../components/componentLib";
-import { WEB_PAGE_CONFIG } from "../../../constant/defaultConfig";
-import useGetPageInfo from "../../../hooks/useGetPageInfo";
+} from '../../../components/componentLib';
+import { WEB_PAGE_CONFIG } from '../../../constant/defaultConfig';
+import useGetPageInfo from '../../../hooks/useGetPageInfo';
 
 export default function EditContainer() {
   const page = useGetPageInfo();
@@ -12,7 +12,7 @@ export default function EditContainer() {
   const { height, width } = pageSize;
 
   const { setNodeRef } = useDroppable({
-    id: "edit-container",
+    id: 'edit-container',
   });
   return (
     <div
@@ -20,7 +20,7 @@ export default function EditContainer() {
       style={{ height, width }}
     >
       {/* 下方这个 div 为真正 tsx 页面返回元素 */}
-      <div ref={setNodeRef} className="bg-white w-full h-full">
+      <div ref={setNodeRef} className="bg-white w-full h-full overflow-scroll">
         {nodes?.map((item) => {
           return GenComponent(item);
         })}
@@ -37,7 +37,7 @@ function GenComponent(item: ComponentPropsType) {
   const { Component } = componentConfig;
   const { childNode = [], ...rest } = item;
 
-  if (item.id == "98-1") {
+  if (item.id == '98-1') {
     // console.log('item', item);
   }
 
