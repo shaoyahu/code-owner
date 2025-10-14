@@ -21,7 +21,12 @@ import { useState } from 'react';
 export default function Edit() {
   const [type, setType] = useState('empty');
   const { loading } = useLoadPageData();
-  const { moveNode, addComponentToPage, changeDragHoverNodeId } = useStore();
+  const {
+    moveNode,
+    addComponentToPage,
+    changeDragHoverNodeId,
+    changeSelectedNodeId,
+  } = useStore();
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: { distance: 3 },
@@ -31,10 +36,13 @@ export default function Edit() {
     })
   );
 
+  function clearSelectedId() {
+    changeSelectedNodeId('');
+  }
+
   return (
     <DndContext
       sensors={sensors}
-      // collisionDetection={closestCenter}
       onDragStart={(e) => {
         const type = e.active.data.current?.type || 'empty';
         setType(type);
@@ -50,10 +58,11 @@ export default function Edit() {
           if (active.id === over.id) {
             return;
           } else {
+            // 如果拖拽的组件从画布中拖动，则修改自己位置到其他组件中
             if (active.data?.current?.origin === 'canvas') {
               moveNode(active.id as string, over.id as string, 'inside');
             }
-
+            // 如果拖拽的组件从组件库中拖动，则新添加一个组件到其他组件中
             if (active.data?.current?.origin === 'lib') {
               const type = active.data?.current?.type;
               const componentConfig = getComponentConfigByType(type as string);
@@ -80,7 +89,10 @@ export default function Edit() {
           <div className="bg-white !px-4 rounded-md w-[300px]">
             <EditLeftPanel />
           </div>
-          <div className="flex flex-1 justify-center items-center rounded-md">
+          <div
+            className="flex flex-1 justify-center items-center rounded-md"
+            onClick={clearSelectedId}
+          >
             {loading ? <Spin size="large" /> : <EditContainer />}
           </div>
           <div className="bg-white !px-4 rounded-md w-[300px]">
