@@ -17,6 +17,7 @@ import { getComponentConfigByType } from '../../components/componentLib';
 import { genUUID } from '../../utils/calc';
 import DragDisplay from '../../components/DragDisplay';
 import { useState } from 'react';
+import DeleteArea from '../../components/DeleteArea';
 
 export default function Edit() {
   const [type, setType] = useState('empty');
@@ -26,6 +27,7 @@ export default function Edit() {
     addComponentToPage,
     changeDragHoverNodeId,
     changeSelectedNodeId,
+    changeShowDeleteArea,
   } = useStore();
   const sensors = useSensors(
     useSensor(MouseSensor, {
@@ -46,13 +48,14 @@ export default function Edit() {
       onDragStart={(e) => {
         const type = e.active.data.current?.type || 'empty';
         setType(type);
+        changeShowDeleteArea();
       }}
       onDragOver={(e) => {
         changeDragHoverNodeId(String(e.over?.id));
         console.log('onDragOver', e);
       }}
       onDragEnd={(e) => {
-        // console.log("onDragEnd", e);
+        console.log('onDragEnd', e);
         const { active, over } = e;
         if (active && over) {
           if (active.id === over.id) {
@@ -79,6 +82,7 @@ export default function Edit() {
             }
           }
         }
+        changeShowDeleteArea();
       }}
     >
       <div className="flex flex-col gap-4 !pb-4 h-full">
@@ -90,10 +94,11 @@ export default function Edit() {
             <EditLeftPanel />
           </div>
           <div
-            className="flex flex-1 justify-center items-center rounded-md"
+            className="relative flex flex-1 justify-center items-center rounded-md"
             onClick={clearSelectedId}
           >
             {loading ? <Spin size="large" /> : <EditContainer />}
+            <DeleteArea />
           </div>
           <div className="bg-white !px-4 rounded-md w-[300px]">
             <EditRightPanel />

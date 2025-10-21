@@ -24,8 +24,15 @@ export type PageSlice = {
   hoverNodeIdList: string[];
   // 组件拖拽时 hover 到的组件 id
   dragHoverNodeId: string;
+  // 展示删除区域
+  showDeleteArea: boolean;
+
+
+
 
   // action
+  // 修改展示删除区域
+  changeShowDeleteArea: () => void;
   // 修改拖拽组件时 hover 到的组件的 id
   changeDragHoverNodeId: (id: string) => void;
   // 鼠标移动中移入任意组件时将当前移入的组件 Id 添加到 hover 节点列表中
@@ -67,6 +74,9 @@ export const createPageSlice: SliceCreator<PageSlice> = (set) => ({
   componentSettingTab: COMPONENT_SETTING_TAB.CONTENT,
   hoverNodeIdList: [],
   dragHoverNodeId: "",
+  showDeleteArea: false,
+
+  changeShowDeleteArea: () => set((state) => ({ showDeleteArea: !state.showDeleteArea })),
 
   changeDragHoverNodeId: (id) => set(() => ({ dragHoverNodeId: id })),
 
@@ -105,19 +115,18 @@ export const createPageSlice: SliceCreator<PageSlice> = (set) => ({
       let movedNode: BasicComponentPropsType[] = [];
       if (nodes) {
         const dragRes = findArrAndIndex(nodes, dragId);
-        if (dragRes) {
-          const { arr: dragArr, index: dragIndex } = dragRes;
-          const dragNode = dragArr[dragIndex];
-          // 这里需要解决拖拽嵌套的问题
-          // 在这个方法中判断如果拖放元素是拖拽元素的子元素，则取消拖拽
-          const idList = getChildNodeIdList(dragNode);
-          if (idList.includes(dropId)) {
-            return;
-          }
-          movedNode = removeIndex(dragArr, dragIndex);
-        }
+        if (!dragRes) return;
+        const { arr: dragArr, index: dragIndex } = dragRes;
+        const dragNode = dragArr[dragIndex];
+        // 这里需要解决拖拽嵌套的问题
+        // 在这个方法中判断如果拖放元素是拖拽元素的子元素，则取消拖拽
+        const idList = getChildNodeIdList(dragNode);
+        if (idList.includes(dropId)) return;
+
         const dropRes = findArrAndIndex(nodes, dropId);
         if (dropRes) {
+          // 拖放元素在元素中，说明并不是删除
+          movedNode = removeIndex(dragArr, dragIndex);
           const { arr: dropArr, index: dropIndex } = dropRes;
           if (type === "after") {
             insertIndex(dropArr, dropIndex + 1, movedNode[0]);
@@ -129,6 +138,11 @@ export const createPageSlice: SliceCreator<PageSlice> = (set) => ({
               ...(dropArr[dropIndex].childNode || []),
             ];
           }
+        }
+
+        if (!dropRes && dropId === "delete-area") {
+          // 拖放元素不在页面元素节点中，且拖放元素 Id 为删除框 Id 符合移动到删除框就直接删除，否则不做其他处理
+          movedNode = removeIndex(dragArr, dragIndex);
         }
       }
     }),
