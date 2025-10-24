@@ -65,6 +65,7 @@ const initialPage = {
   name: "defaultPage",
   id: "-1",
   page: { height: "800px", width: "1100px" },
+  nodes: []
 };
 
 export const createPageSlice: SliceCreator<PageSlice> = (set) => ({
@@ -123,26 +124,32 @@ export const createPageSlice: SliceCreator<PageSlice> = (set) => ({
         const idList = getChildNodeIdList(dragNode);
         if (idList.includes(dropId)) return;
 
-        const dropRes = findArrAndIndex(nodes, dropId);
-        if (dropRes) {
-          // 拖放元素在元素中，说明并不是删除
-          movedNode = removeIndex(dragArr, dragIndex);
-          const { arr: dropArr, index: dropIndex } = dropRes;
-          if (type === "after") {
-            insertIndex(dropArr, dropIndex + 1, movedNode[0]);
-          } else if (type === "before") {
-            insertIndex(dropArr, dropIndex, movedNode[0]);
-          } else {
-            dropArr[dropIndex].childNode = [
-              ...movedNode,
-              ...(dropArr[dropIndex].childNode || []),
-            ];
+        if (dropId === "edit-container") {
+          // 是从别的地方拖拽到编辑容器中，属于页面组件的 nodes 内容的第一层，默认放到末尾去
+          removeIndex(dragArr, dragIndex);
+          insertIndex(nodes, nodes.length, dragNode);
+        } else {
+          const dropRes = findArrAndIndex(nodes, dropId);
+          if (dropRes) {
+            // 拖放元素在元素中，说明并不是删除
+            movedNode = removeIndex(dragArr, dragIndex);
+            const { arr: dropArr, index: dropIndex } = dropRes;
+            if (type === "after") {
+              insertIndex(dropArr, dropIndex + 1, movedNode[0]);
+            } else if (type === "before") {
+              insertIndex(dropArr, dropIndex, movedNode[0]);
+            } else {
+              dropArr[dropIndex].childNode = [
+                ...movedNode,
+                ...(dropArr[dropIndex].childNode || []),
+              ];
+            }
           }
-        }
 
-        if (!dropRes && dropId === "delete-area") {
-          // 拖放元素不在页面元素节点中，且拖放元素 Id 为删除框 Id 符合移动到删除框就直接删除，否则不做其他处理
-          movedNode = removeIndex(dragArr, dragIndex);
+          if (!dropRes && dropId === "delete-area") {
+            // 拖放元素不在页面元素节点中，且拖放元素 Id 为删除框 Id 符合移动到删除框就直接删除，否则不做其他处理
+            movedNode = removeIndex(dragArr, dragIndex);
+          }
         }
       }
     }),
@@ -152,13 +159,18 @@ export const createPageSlice: SliceCreator<PageSlice> = (set) => ({
     set((state) => {
       const { nodes } = state.page;
       if (nodes) {
-        const dropRes = findArrAndIndex(nodes, dropId);
-        if (dropRes) {
-          const { arr: dropArr, index: dropIndex } = dropRes;
-          dropArr[dropIndex].childNode = [
-            component,
-            ...(dropArr[dropIndex].childNode || []),
-          ];
+        if (dropId === "edit-container") {
+          // 拖拽到编辑容器中，属于页面组件的 nodes 内容的第一层，默认放到末尾去
+          insertIndex(nodes, nodes.length, component);
+        } else {
+          const dropRes = findArrAndIndex(nodes, dropId);
+          if (dropRes) {
+            const { arr: dropArr, index: dropIndex } = dropRes;
+            dropArr[dropIndex].childNode = [
+              component,
+              ...(dropArr[dropIndex].childNode || []),
+            ];
+          }
         }
       }
     });

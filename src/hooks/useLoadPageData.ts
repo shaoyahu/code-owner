@@ -14,6 +14,7 @@ export default function useLoadPageData() {
 
   useEffect(() => {
     if (!data) return;
+    console.log('data', data);
     resetPage(data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);

@@ -14,6 +14,7 @@ export default function EditContainer() {
   const { setNodeRef } = useDroppable({
     id: 'edit-container',
   });
+  console.log('nodes', nodes);
   return (
     <div
       className="flex justify-center items-center shadow-[0_0_10px_5px_rgba(0,0,0,0.1)]"
@@ -21,7 +22,7 @@ export default function EditContainer() {
     >
       {/* 下方这个 div 为真正 tsx 页面返回元素 */}
       <div ref={setNodeRef} className="bg-white w-full h-full overflow-scroll">
-        {nodes?.map((item) => {
+        {nodes?.filter(Boolean)?.map((item) => {
           return GenComponent(item);
         })}
       </div>
@@ -30,6 +31,8 @@ export default function EditContainer() {
 }
 
 function GenComponent(item: ComponentPropsType) {
+  // console.log('item', item);
+  if (!item) return;
   const componentConfig = getComponentConfigByType(item.type);
   if (!componentConfig) {
     return null;

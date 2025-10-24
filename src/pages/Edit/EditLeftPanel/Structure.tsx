@@ -37,7 +37,7 @@ export default function Structure() {
   useEffect(() => {
     function fn(nodes: BasicComponentPropsType[] = []) {
       const result: TreeDataNode[] = [];
-      nodes.forEach((item) => {
+      nodes.filter(Boolean).forEach((item) => {
         const obj: TreeDataNode = {
           title: (
             <Space align="center">
