@@ -3,8 +3,9 @@ import useDragAndDrop from '../../hooks/useDragAndDrop';
 import { CSS } from '@dnd-kit/utilities';
 import useStore from '../../store';
 import type { MouseEvent } from 'react';
+import type { ComponentPropsType } from '../componentLib';
 
-type DragAndDropContainerType = {
+type DragAndDropContainerType = ComponentPropsType & {
   id: string;
   name: string;
   type: string;
@@ -13,7 +14,16 @@ type DragAndDropContainerType = {
   adButtonData?: { block?: boolean };
 };
 export default function DragAndDropContainer(props: DragAndDropContainerType) {
-  const { id, name, type, children, block = false, adButtonData = {} } = props;
+  const {
+    id,
+    name,
+    type,
+    children,
+    block = false,
+    adButtonData = {},
+    css = {},
+    tailwind,
+  } = props;
   const { attributes, listeners, setNodeRef, transform, isDragging, isOver } =
     useDragAndDrop(id, type);
   const {
@@ -42,15 +52,16 @@ export default function DragAndDropContainer(props: DragAndDropContainerType) {
 
   const style = {
     ...DEFAULT_INITIAL_STYLE,
+    ...css,
     transform: CSS.Translate.toString(transform),
     opacity: isDragging ? 0 : 1,
   };
-
-  const className = `relative border! border-dashed! border-transparent overflow-visible
-  ${isDragging && 'border-[#008cff]!'}
-  ${isOver && 'bg-[#b4d2ff]! border-[#0000CD]!'} 
-  ${selectShow && 'border-[#008cff]! border-solid!'}
-  ${hoverShow && 'hover:border-[#008cff]!'}`;
+  console.log('tailwind', tailwind);
+  const className = `relative border-dashed! border-transparent overflow-visible ${tailwind}
+  ${isDragging && 'border-[#008cff]! border! border-dashed!'}
+  ${isOver && 'bg-[#b4d2ff]! border-[#0000CD]! border! border-dashed!'} 
+  ${selectShow && 'border-[#008cff]! border-solid! border!'}
+  ${hoverShow && 'hover:border-[#008cff]!'} border! border-dashed!`;
 
   function onMouseEnter() {
     pushHoverNodeId(id);

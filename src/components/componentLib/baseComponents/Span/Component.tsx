@@ -1,14 +1,14 @@
-import { type SpanPropsType, SpanDefaultProps } from "./interface";
-import DragAndDropContainer from "../../../DragAndDropContainer";
+import { type SpanPropsType, SpanDefaultProps } from './interface';
+import DragAndDropContainer from '../../../DragAndDropContainer';
 
 export default function SpanComponent(props: SpanPropsType) {
-  const { id, text, children, tailwind, css, name, type } = {
+  const { text, children, tailwind, css } = {
     ...SpanDefaultProps,
     ...props,
   };
 
   return (
-    <DragAndDropContainer name={name} id={id} type={type}>
+    <DragAndDropContainer {...props}>
       <span className={tailwind} style={css}>
         {text}
         {children}

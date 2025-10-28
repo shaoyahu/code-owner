@@ -10,154 +10,82 @@ export const page = {
   ],
   nodes: [
     {
-      id: "1",
-      type: "div",
-      name: "顶部 header",
-      _desc: "最基础的组件，用来填充空间或包裹组件",
-      css: {
-        fontSize: "12px",
-      },
-      tailwind: "h-[300px]",
-      event: {
-        onClick: {
-          name: "onClick",
-          handleCode: "console.log('click')",
-        },
-      },
-      childNode: [
+      "id": "7b8aae8d-0567-4227-a222-9d035c8aee7c",
+      "name": "顶部 Header",
+      "type": "div",
+      "tailwind": "!w-full !p-2 flex bg-white !border-b border-1 items-center",
+      "childNode": [
         {
-          id: "2",
-          type: "span",
-          name: "页面名称",
-          _desc: "最基础的组件，用于放置文字，因为组件内是可以直接放文字的",
-          text: "直接的文字",
-          tailwind: "!m-2",
-          css: {},
+          "id": "72e54dd8-19f0-4a57-af96-ccc4eb661ead",
+          "name": "WT 标题",
+          "type": "span",
+          "tailwind": "",
+          "text": " Watch Tool",
+          "css": {},
+          "event": {
+            "onClick": {}
+          }
         },
         {
-          id: "98",
-          type: "div",
-          name: "子元素div",
-          text: "no",
-          tailwind: "bg-gray-200 h-10 flex items-center justify-around",
-          childNode: [
+          "id": "fbf7b888-9503-4e59-99a5-5144edbe89f9",
+          "name": "按钮组",
+          "type": "div",
+          "tailwind": "!ml-auto !px-2",
+          "childNode": [
             {
-              id: "98-1",
-              type: "ad-button",
-              name: "按钮1",
-              text: "按钮1",
-              css: {},
-              tailwind: "text-[12px]",
-              event: {},
-              attr: {
-                block: true,
-                type: "default",
+              "id": "bad50c50-1b40-4cbd-a2b3-dd962cba348d",
+              "name": "调试模式按钮",
+              "type": "ad-button",
+              "tailwind": "!ml-auto",
+              "text": "开启调试",
+              "attr": {
+                "block": false,
+                "type": "primary",
+                "icon": "CheckOutlined"
               },
-            },
-            {
-              id: "98-2",
-              type: "ad-button",
-              name: "按钮2",
-              text: "按钮2",
-              css: {},
-              tailwind: "text-[12px]",
-              event: {},
-              attr: {
-                block: false,
-              },
-            },
-            {
-              id: "98-3",
-              type: "ad-button",
-              name: "按钮3",
-              text: "按钮3",
-              css: {},
-              tailwind: "text-[12px]",
-              event: {},
-            },
+              "css": {},
+              "event": {
+                "onClick": {}
+              }
+            }
           ],
-        },
-        {
-          id: "3",
-          type: "ad-button",
-          name: "登录按钮",
-          css: {},
-          tailwind: "text-[20px] font-bold",
-          event: {},
-          childNode: [
-            {
-              id: "4",
-              type: "span",
-              name: "登录按钮文本",
-              text: "组件内的文字",
-            },
-          ],
-        },
+          "css": {},
+          "event": {
+            "onClick": {}
+          }
+        }
       ],
+      "css": {
+        "height": "40px"
+      },
+      "event": {
+        "onClick": {}
+      }
     },
     {
-      id: "11",
-      type: "div",
-      name: "底部 footer",
-      _desc: "最基础的组件，用来填充空间或包裹组件",
-      css: {},
-      tailwind: "w-[300px] h-[300px]",
-      event: {
-        onClick: {
-          name: "onClick",
-          handleCode: "console.log('click')",
-        },
-      },
-      childNode: [
+      "id": "952ed522-3663-4f15-a9fe-e0976f6bb0ef",
+      "name": "div",
+      "type": "div",
+      "tailwind": "bg-gray-100",
+      "childNode": [
         {
-          id: "12",
-          type: "span",
-          name: "页面名称",
-          _desc: "最基础的组件，用于放置文字，因为组件内是可以直接放文字的",
-          text: "直接的文字",
-        },
-        {
-          id: "13",
-          type: "ad-button",
-          name: "订单",
-          css: {},
-          tailwind: "text-[20px] font-bold",
-          event: {},
-          childNode: [
-            {
-              id: "14",
-              type: "span",
-              name: "登录按钮文本",
-              text: "组件内的文字",
-            },
-          ],
-        },
-        {
-          id: "23",
-          type: "ad-button",
-          name: "购物车",
-          css: {},
-          tailwind: "text-[20px] font-bold",
-          event: {},
-        },
-        {
-          id: "33",
-          type: "ad-button",
-          name: "我的",
-          css: {},
-          tailwind: "text-[20px] font-bold",
-          event: {},
-          childNode: [
-            {
-              id: "34",
-              type: "span",
-              name: "登录按钮文本",
-              text: "组件内的文字",
-            },
-          ],
-        },
+          "id": "1707c478-0455-4703-9ca8-9ae0fa4973e1",
+          "name": "目录",
+          "type": "div",
+          "tailwind": "w-[100px] h-full!",
+          "css": {},
+          "event": {
+            "onClick": {}
+          }
+        }
       ],
-    },
+      "css": {
+        "height": "calc(100% - '40px')"
+      },
+      "event": {
+        "onClick": {}
+      }
+    }
   ],
   effects: [
     {
