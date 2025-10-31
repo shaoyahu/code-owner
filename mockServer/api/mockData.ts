@@ -56,31 +56,51 @@ export const page = {
         }
       ],
       "css": {
-        "height": "40px"
+        "height": "",
+        "display": "flex"
       },
       "event": {
         "onClick": {}
       }
     },
     {
-      "id": "952ed522-3663-4f15-a9fe-e0976f6bb0ef",
-      "name": "div",
+      "id": "769b878b-e40b-4205-b05d-8bab26a7d56e",
+      "name": "按钮 Tab",
       "type": "div",
-      "tailwind": "bg-gray-100",
+      "tailwind": "w-auto !m-1",
       "childNode": [
         {
-          "id": "1707c478-0455-4703-9ca8-9ae0fa4973e1",
-          "name": "目录",
-          "type": "div",
-          "tailwind": "w-[100px] h-full!",
-          "css": {},
-          "event": {
-            "onClick": {}
-          }
+          "id": "57887d1a-7141-47a5-a667-983eb990604b",
+          "name": "ad-button",
+          "type": "ad-button",
+          "tailwind": "!m-1",
+          "text": "按钮"
+        },
+        {
+          "id": "c76a51b9-317a-4225-a970-d1a5cfcdc764",
+          "name": "ad-button",
+          "type": "ad-button",
+          "tailwind": "!m-1",
+          "text": "按钮"
+        },
+        {
+          "id": "9e21f628-9c01-4db3-b266-49924949cd97",
+          "name": "ad-button",
+          "type": "ad-button",
+          "tailwind": "!m-1",
+          "text": "按钮"
+        },
+        {
+          "id": "358896e1-de98-4552-a33b-2e342ac94a88",
+          "name": "ad-button",
+          "type": "ad-button",
+          "tailwind": "!m-1",
+          "text": "按钮"
         }
       ],
       "css": {
-        "height": "calc(100% - '40px')"
+        "width": "50%",
+        "backgroundColor": "#d6def7"
       },
       "event": {
         "onClick": {}

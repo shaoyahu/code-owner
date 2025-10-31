@@ -1,15 +1,37 @@
+/**
+ * 真正组件样式与拖拽容器组件样式冲突解决方案如下（暂时）
+ * 有遇到问题再做修改，针对具体样式问题给样式名和类名
+ *
+ * css：
+ *  传递给拖拽容器的：
+ *    - height
+ *    - width
+ *  真正组件使用的：...rest
+ *
+ *
+ * tailwind：
+ *  传递给拖拽容器的：全部
+ *  真正组件使用的：无
+ */
+
 import { DEFAULT_INITIAL_STYLE } from '../../constant/defaultConfig';
 import useDragAndDrop from '../../hooks/useDragAndDrop';
 import { CSS } from '@dnd-kit/utilities';
 import useStore from '../../store';
-import type { MouseEvent } from 'react';
+import {
+  type ReactElement,
+  cloneElement,
+  type MouseEvent,
+  type HTMLAttributes,
+} from 'react';
 import type { ComponentPropsType } from '../componentLib';
 
 type DragAndDropContainerType = ComponentPropsType & {
   id: string;
   name: string;
   type: string;
-  children: React.ReactNode;
+  // children: ReactElement;
+  children: ReactElement<HTMLAttributes<HTMLElement> & { tailwind?: string }>;
   block?: boolean;
   adButtonData?: { block?: boolean };
 };
@@ -24,6 +46,8 @@ export default function DragAndDropContainer(props: DragAndDropContainerType) {
     css = {},
     tailwind,
   } = props;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { height, width, ...restCss } = css;
   const { attributes, listeners, setNodeRef, transform, isDragging, isOver } =
     useDragAndDrop(id, type);
   const {
@@ -52,11 +76,13 @@ export default function DragAndDropContainer(props: DragAndDropContainerType) {
 
   const style = {
     ...DEFAULT_INITIAL_STYLE,
-    ...css,
+    // ...css,
+    height,
+    width,
     transform: CSS.Translate.toString(transform),
     opacity: isDragging ? 0 : 1,
   };
-  console.log('tailwind', tailwind);
+  // console.log('tailwind', tailwind);
   const className = `relative border-dashed! border-transparent overflow-visible ${tailwind}
   ${isDragging && 'border-[#008cff]! border! border-dashed!'}
   ${isOver && 'bg-[#b4d2ff]! border-[#0000CD]! border! border-dashed!'} 
@@ -77,6 +103,11 @@ export default function DragAndDropContainer(props: DragAndDropContainerType) {
     changeSelectedNodeId(id);
   }
 
+  const realComponent = cloneElement(children, {
+    style: { ...restCss },
+    tailwind: '',
+  });
+
   return (
     <>
       {judgeBlock() ? (
@@ -93,7 +124,7 @@ export default function DragAndDropContainer(props: DragAndDropContainerType) {
           {(hoverShow || dragOverShow || selectShow) && (
             <Label name={name} selectShow={selectShow} />
           )}
-          {children}
+          {realComponent}
         </div>
       ) : (
         <span
@@ -109,7 +140,7 @@ export default function DragAndDropContainer(props: DragAndDropContainerType) {
           {(hoverShow || dragOverShow || selectShow) && (
             <Label name={name} selectShow={selectShow} />
           )}
-          {children}
+          {realComponent}
         </span>
       )}
     </>

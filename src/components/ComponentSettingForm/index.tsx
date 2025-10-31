@@ -98,6 +98,13 @@ export default function ComponentSettingForm<T>(
         >
           <ColorPicker format="hex" showText />
         </Form.Item>
+        <Form.Item
+          name={['css', 'backgroundColor']}
+          getValueFromEvent={(color) => color.toHexString()}
+          label="背景颜色"
+        >
+          <ColorPicker format="hex" showText />
+        </Form.Item>
       </div>
 
       {/* 事件 */}
