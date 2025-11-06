@@ -14,7 +14,7 @@ export default function EditContainer() {
   const { setNodeRef } = useDroppable({
     id: 'edit-container',
   });
-  console.log('nodes', nodes);
+  // console.log('nodes', nodes);
   return (
     <div
       className="flex justify-center items-center shadow-[0_0_10px_5px_rgba(0,0,0,0.1)]"

@@ -9,6 +9,7 @@ import {
 import { COMPONENT_SETTING_TAB } from '../../constant/defaultConfig';
 import useStore from '../../store';
 import { genOptions } from '../../utils/calc';
+import { useEffect } from 'react';
 
 export type InitialType<T> = Omit<T, 'id' | 'type'>;
 
@@ -26,18 +27,23 @@ export default function ComponentSettingForm<T>(
   const { form, handleValueChange, initialValues, otherAttr = <></> } = props;
   // console.log('initialValues', initialValues);
   const { componentSettingTab } = useStore();
+
+  useEffect(() => {
+    form.resetFields()
+    form.setFieldsValue(initialValues)
+  }, [initialValues])
+  
   return (
     <Form
       form={form}
       onValuesChange={handleValueChange}
       layout="vertical"
-      initialValues={initialValues}
+      initialValues={{}}
     >
       {/* 基本内容 */}
       <div
-        className={`${
-          componentSettingTab === COMPONENT_SETTING_TAB.CONTENT ? '' : 'hidden'
-        }`}
+        className={`${componentSettingTab === COMPONENT_SETTING_TAB.CONTENT ? '' : 'hidden'
+          }`}
       >
         <Form.Item
           name="name"
@@ -62,9 +68,8 @@ export default function ComponentSettingForm<T>(
 
       {/* 样式 */}
       <div
-        className={`${
-          componentSettingTab === COMPONENT_SETTING_TAB.STYLE ? '' : 'hidden'
-        }`}
+        className={`${componentSettingTab === COMPONENT_SETTING_TAB.STYLE ? '' : 'hidden'
+          }`}
       >
         <Form.Item name={['css', 'width']} label="宽度">
           <Input placeholder="exp:500px" />
@@ -109,9 +114,8 @@ export default function ComponentSettingForm<T>(
 
       {/* 事件 */}
       <div
-        className={`${
-          componentSettingTab === COMPONENT_SETTING_TAB.EVENT ? '' : 'hidden'
-        }`}
+        className={`${componentSettingTab === COMPONENT_SETTING_TAB.EVENT ? '' : 'hidden'
+          }`}
       >
         <Form.Item
           name={['event', 'onClick', 'handleCode']}

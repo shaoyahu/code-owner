@@ -1,6 +1,5 @@
 import { Form } from 'antd';
 import type { DivPropsType } from './interface';
-import { useEffect } from 'react';
 import ComponentSettingForm, {
   type InitialType,
 } from '../../../ComponentSettingForm';
@@ -15,10 +14,6 @@ export default function PropComponent(props: DivPropsType) {
       onChange(newValues);
     }
   }
-
-  useEffect(() => {
-    form.setFieldsValue({ tailwind, css, name, event });
-  }, [tailwind, css, name, form, event]);
 
   return (
     <ComponentSettingForm<InitialType<DivPropsType>>
